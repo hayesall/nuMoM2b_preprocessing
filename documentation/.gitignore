@@ -1,0 +1,7 @@
+# Copyright 2019 Alexander L. Hayes
+#
+# Overview:
+#     This .gitignore is for ignoring intermediary files produced by Sphinx,
+#     and for other build files which can be reproduced locally.
+
+build
