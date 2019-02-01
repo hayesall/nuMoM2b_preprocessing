@@ -1,0 +1,8 @@
+{
+  "csv_path": "../Data/",
+  "files": [
+    "Visit1.csv",
+    "Screening.csv"
+  ],
+  "target": "pregnancy_outcomes.csv"
+}

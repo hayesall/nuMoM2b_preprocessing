@@ -1,0 +1,24 @@
+# Copyright 2019 Alexander L. Hayes
+#
+# .coveragerc for configuring code coverage.
+#
+# Coverage Examples:
+#   coverage run phi/unittests/tests.py
+
+[run]
+branch = True
+
+[report]
+exclude_lines =
+
+    # Ignore debug statements
+    def __repr__
+    def __str__
+
+    raise NotImplementedError
+
+    # Ignore main calls
+    if __name__ == .__main__.:
+
+[html]
+directory = htmlcov
