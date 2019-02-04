@@ -1,4 +1,5 @@
 {
+  "log_file": "phi_debugging.log",
   "csv_path": "../Data/",
   "files": [
     "Visit1.csv",

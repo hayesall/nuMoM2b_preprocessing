@@ -58,6 +58,9 @@ def parameters(config="phi_config.json"):
         _path_list.append("{0}{1}".format(_parameters["csv_path"], _file))
 
     _parameters["paths"] = _path_list
+    _parameters["target"] = "{0}{1}".format(
+        _parameters["csv_path"], _parameters["target"]
+    )
 
     return _parameters
 

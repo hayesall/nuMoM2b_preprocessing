@@ -11,12 +11,20 @@ from ... import get_config
 
 
 class InitializeConfigurationTest(unittest.TestCase):
+    """
+    Initialize loading from config files with (possibly) ideal settings: good
+    formatting, correct path variables, etc.
+    """
+
     def test_initialize_configuration_1(self):
+        """
+        Test contents of ``config_tests/sample_config_files/config1.json``.
+        """
 
         _expected = {
             "csv_path": "../Data/",
             "files": ["Visit1.csv", "Screening.csv"],
-            "target": "pregnancy_outcomes.csv",
+            "target": "../Data/pregnancy_outcomes.csv",
             "paths": ["../Data/Visit1.csv", "../Data/Screening.csv"],
         }
         _params = get_config.parameters(
