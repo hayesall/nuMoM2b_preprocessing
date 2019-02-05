@@ -1,18 +1,17 @@
 {
-  "log_file": "debug.log",
   "csv_path": "../Data/",
   "files": [
     {
       "name": "Visit1.csv",
-      "drop": []
+      "drop": ["column1", "column2"]
     },
     {
       "name": "Screening.csv",
-      "drop": []
+      "drop": ["column5", "column1"]
     }
   ],
   "target": {
     "name": "pregnancy_outcomes.csv",
-    "drop": []
+    "drop": ["column1", "column5"]
   }
 }

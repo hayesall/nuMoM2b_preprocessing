@@ -1,8 +1,14 @@
 {
   "csv_path": "../Data/",
   "files": [
-    "Visit1.csv",
-    "Screening.csv"
+    {
+      "name": "Visit1.csv"
+    },
+    {
+      "name": "Screening.csv"
+    }
   ],
-  "target": "pregnancy_outcomes.csv"
+  "target": {
+    "name": "pregnancy_outcomes.csv"
+  }
 }

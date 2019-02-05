@@ -34,11 +34,13 @@ Example File
     {
       "csv_path": "../../Data/",
       "files": [
-        "Visit1.csv",
-        "Screening.csv"
+        {"name": "Visit1.csv", "drop": []},
+        {"name": "Screening.csv"}
       ],
-      "target": "pregnancy_outcomes.csv"
-    }
+      "target": {
+          "name": "pregnancy_outcomes.csv",
+          "drop": []
+      }
 
 """
 
@@ -53,14 +55,27 @@ def parameters(config="phi_config.json"):
     with open(config) as config_file:
         _parameters = json.load(config_file)
 
+    # This is way too complicated for what it is doing.
+
     _path_list = []
     for _file in _parameters["files"]:
-        _path_list.append("{0}{1}".format(_parameters["csv_path"], _file))
+
+        # Create a path to the file for easier reading later.
+        _file_path = "{0}{1}".format(_parameters["csv_path"], _file["name"])
+
+        # Deal with potential "drop" list.
+        _drop = _file["drop"] if _file.get("drop") else []
+
+        # Append a tuple of these to the _path_list
+        _path_list.append(tuple([_file_path, _drop]))
 
     _parameters["paths"] = _path_list
-    _parameters["target"] = "{0}{1}".format(
-        _parameters["csv_path"], _parameters["target"]
-    )
+
+    # Similar process for the target values.
+    _file_path = "{0}{1}".format(_parameters["csv_path"], _parameters["target"]["name"])
+    _drop = _parameters["target"]["drop"] if _parameters["target"].get("drop") else []
+
+    _parameters["target"] = tuple([_file_path, _drop])
 
     return _parameters
 

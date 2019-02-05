@@ -16,6 +16,23 @@ import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
 
+
+def _log_columns(csv_path, string_of_columns):
+    """
+    Log the column names for possible debugging.
+
+    Example:
+
+    .. code-block:: python
+
+        _target = pd.read_csv(config_parameters["target"])
+        _target_columns = str(list(target.columns))
+
+        _log_columns(config_parameters["target"], _target_columns)
+    """
+    LOGGER.debug("File: {0}; Columns: {1}".format(csv_path, string_of_columns))
+
+
 # import data files based on get_config.parameters()
 def run(config_parameters):
     """
@@ -27,13 +44,25 @@ def run(config_parameters):
     LOGGER.debug("Target File {0}".format(config_parameters["target"]))
     LOGGER.debug("Data Paths {0}".format(config_parameters["paths"]))
 
-    # Start by reading the target csv file.
-    target = pd.read_csv(config_parameters["target"])
+    # Read the target csv and drop any specified columns.
+    _name = config_parameters["target"][0]
+    _drop = config_parameters["target"][1]
 
-    # Repeatedly read and inner-join on all data files.
-    for _csv_path in config_parameters["paths"]:
+    target = pd.read_csv(_name, sep=",")
+    _log_columns(config_parameters["target"][0], str(list(target.columns)))
+    target = target.drop(_drop, axis=1)
+    _log_columns(config_parameters["target"][0], str(list(target.columns)))
 
-        _csv_data = pd.read_csv(_csv_path, sep=",")
+    # Repeatedly read, drop, and inner-join on all data files.
+    for _data_tuple in config_parameters["paths"]:
+
+        _name, _drop = _data_tuple[0], _data_tuple[1]
+
+        _csv_data = pd.read_csv(_name, sep=",")
+        _log_columns(_name, str(list(_csv_data.columns)))
+        _csv_data = _csv_data.drop(_drop, axis=1)
+        _log_columns(_name, str(list(_csv_data.columns)))
+
         target = pd.merge(target, _csv_data, how="inner", on=["PublicID"])
 
     return target

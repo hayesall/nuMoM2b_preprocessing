@@ -108,7 +108,7 @@ if ARGS.run:
 
     LOGGER.info("Pre-processing the data.")
 
-    preprocess.run(PARAMETERS)
+    _data = preprocess.run(PARAMETERS)
 
     LOGGER.info("Reached bottom, shutting down logger.")
     logging.shutdown()
