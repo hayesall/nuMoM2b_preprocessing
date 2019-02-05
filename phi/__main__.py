@@ -22,6 +22,13 @@ from . import get_config
 
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument(
+    "-c",
+    "--config",
+    type=str,
+    default="phi_config.json",
+    help="Set the configuration file to read from [Default:phi_config.json].",
+)
+PARSER.add_argument(
     "-l",
     "--logging",
     type=int,
@@ -75,7 +82,7 @@ From the base of the repository:
 # Arguments and Configuration Files
 
 ARGS = PARSER.parse_args()
-PARAMETERS = get_config.parameters()
+PARAMETERS = get_config.parameters(config=ARGS.config)
 
 # Initialize logging options
 

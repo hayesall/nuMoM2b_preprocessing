@@ -1,3 +1,11 @@
+# Some of this repository involves data sets that have not been made public yet.
+# Because of this, avoidable references to variable names should generally be
+# left in places where they will not be tracked.
+
+# `private.json` will be the magic name I use to keep these things.
+private.json
+
+# Mac and Emacs
 *~
 .DS_Store
 
