@@ -5,9 +5,13 @@
 # `private.json` will be the magic name I use to keep these things.
 private.json
 
-# Mac and Emacs
+# Similar situation for `data.csv`
+data.csv
+
+# Mac, Emacs, IDE-specific configuration files
 *~
 .DS_Store
+.idea
 
 # The following are based on GitHub's Python .gitignore: (866572d)
 # https://github.com/github/gitignore/blob/866572d481b1a2d3dfa11fe423c0ae3ed735d3ed/Python.gitignore
