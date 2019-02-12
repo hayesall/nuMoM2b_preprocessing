@@ -1,33 +1,28 @@
 {
-  "csv_path": "phi/unittests/config_tests/sample_config_files/",
+  "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
   "files": [
     {
       "name": "csv1.csv",
-      "drop": ["column1", "column2"],
-      "groupings": [
-        {
-          "last": ["column3", "column4", "column5"],
-          "rename": ["column345"]
-        }
-      ]
+      "drop": ["column1", "column2"]
     },
     {
       "name": "csv2.csv",
-      "drop": ["column1", "column5"],
-      "groupings": [
-        {
-          "mean": ["column2", "column3"],
-          "rename": "mean23"
-        },
-        {
-          "last": ["column4"],
-          "rename": "column4"
-        }
-      ]
+      "drop": ["column3", "column4","column5"]
     }
   ],
   "target": {
     "name": "target1.csv",
-    "drop": ["column1", "column5"]
-  }
+    "drop": ["column1", "column2"]
+  },
+  "groupings": [
+    {
+      "operator": "last",
+      "columns": ["column3", "column4", "column5"],
+      "rename": "last345"
+    },
+    {
+      "operator": "mean",
+      "columns": ["column1", "column2"]
+    }
+  ]
 }

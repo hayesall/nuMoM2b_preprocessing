@@ -11,7 +11,7 @@ Assumes that a Data folder exists.
 """
 
 import logging
-
+import numpy as np
 import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
@@ -27,7 +27,12 @@ def run(config_parameters):
     ``conf_parameters`` should be passed from get_config.parameters()
     """
 
-    return _build_table(config_parameters)
+    _table = _build_table(config_parameters)
+
+    if config_parameters.get("groupings"):
+        _table = _aggregate_columns(_table, config_parameters["groupings"])
+
+    return _table
 
 
 def _log_columns(csv_path, string_of_columns):
@@ -44,6 +49,40 @@ def _log_columns(csv_path, string_of_columns):
         _log_columns(config_parameters["target"], _target_columns)
     """
     LOGGER.debug("File: {0}; Columns: {1}".format(csv_path, string_of_columns))
+
+
+def _aggregate_columns(data_frame, groupings):
+    """
+    Mutate the data frame by aggregating columns according to configuration parameters,
+    then drop the existing columns.
+
+    :arg ``config_parameters["groupings"]``
+    :return: pandas.core.frame.DataFrame
+    """
+
+    # TODO: This would make more sense as a class. That way we could do: ``frame.aggregate(operation, columns, rename)``
+
+    for entry in groupings:
+
+        _operation = entry["operator"]
+        _columns = entry["columns"]
+        _rename = (
+            entry["rename"]
+            if entry.get("rename")
+            else "{0}{1}".format(entry["operator"], str("".join(entry["columns"])))
+        )
+
+        if _operation == "mean":
+
+            data_frame[_rename] = np.mean(data_frame[_columns], axis=1)
+            data_frame = data_frame.drop(_columns, axis=1)
+
+        if _operation == "last":
+
+            data_frame[_rename] = data_frame[_columns].ffill(axis=1).iloc[:, -1]
+            data_frame = data_frame.drop(_columns, axis=1)
+
+    return data_frame
 
 
 def _build_target_table(file_name, columns_to_drop):

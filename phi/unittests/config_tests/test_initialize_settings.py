@@ -53,22 +53,22 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "phi/unittests/config_tests/sample_config_files/",
+            "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
             "files": [
                 {"name": "csv1.csv", "drop": ["column1", "column2"]},
                 {"name": "csv2.csv", "drop": ["column1", "column3"]},
             ],
             "target": (
-                "phi/unittests/config_tests/sample_config_files/target1.csv",
+                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
                 ["column1", "column2"],
             ),
             "paths": [
                 (
-                    "phi/unittests/config_tests/sample_config_files/csv1.csv",
+                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["column1", "column2"],
                 ),
                 (
-                    "phi/unittests/config_tests/sample_config_files/csv2.csv",
+                    "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
                     ["column1", "column3"],
                 ),
             ],
@@ -87,41 +87,42 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "phi/unittests/config_tests/sample_config_files/",
+            "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
             "files": [
                 {
                     "name": "csv1.csv",
-                    "drop": ["column1", "column2"],
-                    "groupings": [
-                        {
-                            "last": ["column3", "column4", "column5"],
-                            "rename": ["column345"],
-                        }
-                    ],
+                    "drop": ["column1", "column2"]
                 },
                 {
                     "name": "csv2.csv",
-                    "drop": ["column1", "column5"],
-                    "groupings": [
-                        {"mean": ["column2", "column3"], "rename": "mean23"},
-                        {"last": ["column4"], "rename": "column4"},
-                    ],
+                    "drop": ["column3", "column4", "column5"]
                 },
             ],
             "target": (
-                "phi/unittests/config_tests/sample_config_files/target1.csv",
-                ["column1", "column5"],
+                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
+                ["column1", "column2"],
             ),
             "paths": [
                 (
-                    "phi/unittests/config_tests/sample_config_files/csv1.csv",
+                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["column1", "column2"],
                 ),
                 (
-                    "phi/unittests/config_tests/sample_config_files/csv2.csv",
-                    ["column1", "column5"],
+                    "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
+                    ["column3", "column4", "column5"],
                 ),
             ],
+            "groupings": [
+                {
+                    "operator": "last",
+                    "columns": ["column3", "column4", "column5"],
+                    "rename": "last345"
+                },
+                {
+                    "operator": "mean",
+                    "columns": ["column1", "column2"],
+                },
+            ]
         }
 
         _params = get_config.parameters(
