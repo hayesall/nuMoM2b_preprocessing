@@ -5,26 +5,36 @@
 get_config.py
 =============
 
-Read parameters from the ``config.json`` file and make these available through
-a ``get_config.parameters`` variable.
-
-Provides the ``get_config.parameters()`` function.
+Read parameters from a ``config.json`` file and make these available through
+a ``get_config.parameters()`` function.
 
 Available Options
 -----------------
 
-* ``data_path``:
-* ``files``
-* ``target``
+* ``"csv_path"``: Path to directory where all ``.csv`` files are located
+* ``"files"``: List of entries naming individual files
+
+  * ``"name"``: ``.csv`` file name (``csv_path`` will be appended to the beginning)
+  * ``"drop"``: [**optional**] Names of columns to drop from an individual file
+
+* ``"target"``: Target file (what you want to predict)
+
+  * ``"name"``: ``.csv`` file name (``csv_path`` will be appended to the beginning)
+  * ``"drop"``: [**optional**] Names of columns to drop from the target file
+
+* ``"groupings"``: List of objects describing how to aggregate columns
+
+  * ``"operator"``: "mean" or "last"
+  * ``"columns"``: List of column names to apply aggregation operator to. *These columns are dropped after aggregating*
+  * ``"rename"``: [**optional**] Name to apply to the new column of aggregated values
+
+  If none is specified, the column is named according to which columns were aggregated and what operator was used
 
 Example Usage
 -------------
 
-.. code-block:: python
-
-    import get_config
-
-    _params = get_config.parameters(config="phi_config.json")
+>>> import get_config
+>>> _params = get_config.parameters(config="phi_config.json")
 
 Example File
 ------------
@@ -40,8 +50,20 @@ Example File
       "target": {
           "name": "pregnancy_outcomes.csv",
           "drop": []
-      }
-
+      },
+      "groupings": [
+        {
+          "operator": "mean",
+          "columns": ["column1", "column2"],
+          "rename": "average_1_2"
+        },
+        {
+          "operator": "last",
+          "columns": ["measure1", "measure2", "measure3"],
+          "rename": "most_recent_measurement"
+        }
+      ]
+    }
 """
 
 import json

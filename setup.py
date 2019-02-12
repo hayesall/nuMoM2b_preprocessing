@@ -1,11 +1,12 @@
 # Copyright 2019 Alexander L. Hayes
 
 from setuptools import setup
+from setuptools import find_packages
 
 setup(
-    name='PHI',
+    name='phi',
     version='0.0.1',
-    packages=['phi'],
+    packages=find_packages(exclude=["unittests"]),
     url='https://github.com/batflyer/PHI',
     license='Not-Declared',
     author='Alexander L. Hayes (@batflyer)',

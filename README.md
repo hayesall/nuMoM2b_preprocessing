@@ -43,3 +43,27 @@ conda create -n PHI python=3.6
 ```bash
 pip install -r phi/requirements.txt
 ```
+
+## Documentation
+
+Documentation is not currently hosted externally, but local copies may be built using [Sphinx](http://www.sphinx-doc.org/en/master/).
+
+A separate requirements file is in the `documentation/` directory.
+
+```bash
+pip install -r documentation/requirements.txt
+```
+
+A `make.bat` and `Makefile` are included:
+
+```bash
+cd documentation
+make html
+```
+
+If the build is successful, a copy will reside in a new `build/html/` directory.
+
+```bash
+open build/html/index.html          # (macOS)
+xdg-open build/html/index.html      # (Linux — "should" open with default browser)
+```

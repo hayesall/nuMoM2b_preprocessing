@@ -11,10 +11,12 @@ Main repository for the Machine Learning and Analytics side of the Precision Hea
    getting_started
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: API:
 
    api/phi
+   api/phi.get_config
+   api/phi.preprocess
 
 Indices and tables
 ==================
