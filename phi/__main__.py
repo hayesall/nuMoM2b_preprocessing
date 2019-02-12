@@ -86,8 +86,10 @@ PARAMETERS = get_config.parameters(config=ARGS.config)
 
 # Initialize logging options
 
+_logfile = PARAMETERS["log_file"] if PARAMETERS.get("log_file") else "debug.log"
+
 logging.basicConfig(
-    filename="{0}".format(PARAMETERS["log_file"]),
+    filename="{0}".format(_logfile),
     level=ARGS.logging,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
