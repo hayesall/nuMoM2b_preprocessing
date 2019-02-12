@@ -17,6 +17,19 @@ import pandas as pd
 LOGGER = logging.getLogger(__name__)
 
 
+def run(config_parameters):
+    """
+    :arg config_parameters:
+    :return: pandas.core.frame.DataFrame
+
+    Run the pre-processing script based on config parameters.
+
+    ``conf_parameters`` should be passed from get_config.parameters()
+    """
+
+    return _build_table(config_parameters)
+
+
 def _log_columns(csv_path, string_of_columns):
     """
     Log the column names for possible debugging.
@@ -33,27 +46,37 @@ def _log_columns(csv_path, string_of_columns):
     LOGGER.debug("File: {0}; Columns: {1}".format(csv_path, string_of_columns))
 
 
-# import data files based on get_config.parameters()
-def run(config_parameters):
+def _build_target_table(file_name, columns_to_drop):
     """
-    Run the preprocessing script based on config parameters.
+    :param file_name:
+    :param columns_to_drop:
+    :return: pandas.core.frame.DataFrame
+    """
 
-    ``conf_parameters`` should be passed from get_config.parameters()
+    target = pd.read_csv(file_name, sep=",")
+    _log_columns(file_name, str(list(target.columns)))
+
+    target = target.drop(columns_to_drop, axis=1)
+    _log_columns(file_name, str(list(target.columns)))
+
+    return target
+
+
+def _build_table(config_parameters):
+    """
+    Repeatedly read, drop, and inner-join on all files.
+
+    :return: pandas.core.frame.DataFrame
     """
 
     LOGGER.debug("Target File {0}".format(config_parameters["target"]))
     LOGGER.debug("Data Paths {0}".format(config_parameters["paths"]))
 
-    # Read the target csv and drop any specified columns.
     _name = config_parameters["target"][0]
     _drop = config_parameters["target"][1]
 
-    target = pd.read_csv(_name, sep=",")
-    _log_columns(config_parameters["target"][0], str(list(target.columns)))
-    target = target.drop(_drop, axis=1)
-    _log_columns(config_parameters["target"][0], str(list(target.columns)))
+    target = _build_target_table(_name, _drop)
 
-    # Repeatedly read, drop, and inner-join on all data files.
     for _data_tuple in config_parameters["paths"]:
 
         _name, _drop = _data_tuple[0], _data_tuple[1]

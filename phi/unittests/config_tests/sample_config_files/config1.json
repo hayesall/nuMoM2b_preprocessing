@@ -1,14 +1,14 @@
 {
-  "csv_path": "../Data/",
+  "csv_path": "phi/unittests/config_tests/sample_config_files/",
   "files": [
     {
-      "name": "Visit1.csv"
+      "name": "csv1.csv"
     },
     {
-      "name": "Screening.csv"
+      "name": "csv2.csv"
     }
   ],
   "target": {
-    "name": "pregnancy_outcomes.csv"
+    "name": "target1.csv"
   }
 }

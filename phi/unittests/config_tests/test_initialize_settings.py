@@ -2,6 +2,12 @@
 
 """
 Test for the get_config module.
+
+Historical Notes
+----------------
+
+The expected contents of the configuration files has changed as this project has evolved over time——therefore these
+tests somewhat represent these changes.
 """
 
 import unittest
@@ -22,10 +28,16 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "../Data/",
-            "files": [{"name": "Visit1.csv"}, {"name": "Screening.csv"}],
-            "target": ("../Data/pregnancy_outcomes.csv", []),
-            "paths": [("../Data/Visit1.csv", []), ("../Data/Screening.csv", [])],
+            "csv_path": "phi/unittests/config_tests/sample_config_files/",
+            "files": [{"name": "csv1.csv"}, {"name": "csv2.csv"}],
+            "target": (
+                "phi/unittests/config_tests/sample_config_files/target1.csv",
+                [],
+            ),
+            "paths": [
+                ("phi/unittests/config_tests/sample_config_files/csv1.csv", []),
+                ("phi/unittests/config_tests/sample_config_files/csv2.csv", []),
+            ],
         }
         _params = get_config.parameters(
             config="phi/unittests/config_tests/sample_config_files/config1.json"
@@ -41,17 +53,79 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "../Data/",
+            "csv_path": "phi/unittests/config_tests/sample_config_files/",
             "files": [
-                {"name": "Visit1.csv", "drop": ["column1", "column2"]},
-                {"name": "Screening.csv", "drop": ["column5", "column1"]},
+                {"name": "csv1.csv", "drop": ["column1", "column2"]},
+                {"name": "csv2.csv", "drop": ["column1", "column3"]},
             ],
-            "target": ("../Data/pregnancy_outcomes.csv", ["column1", "column5"]),
+            "target": (
+                "phi/unittests/config_tests/sample_config_files/target1.csv",
+                ["column1", "column2"],
+            ),
             "paths": [
-                ("../Data/Visit1.csv", ["column1", "column2"]),
-                ("../Data/Screening.csv", ["column5", "column1"]),
+                (
+                    "phi/unittests/config_tests/sample_config_files/csv1.csv",
+                    ["column1", "column2"],
+                ),
+                (
+                    "phi/unittests/config_tests/sample_config_files/csv2.csv",
+                    ["column1", "column3"],
+                ),
             ],
         }
         _params = get_config.parameters(
             config="phi/unittests/config_tests/sample_config_files/config2.json"
         )
+
+        self.assertEqual(_params, _expected)
+
+    def test_initialize_configuration_3(self):
+        """
+        Test contents of ``config_tests/sample_config_files/config3.json``
+
+        :return: None
+        """
+
+        _expected = {
+            "csv_path": "phi/unittests/config_tests/sample_config_files/",
+            "files": [
+                {
+                    "name": "csv1.csv",
+                    "drop": ["column1", "column2"],
+                    "groupings": [
+                        {
+                            "last": ["column3", "column4", "column5"],
+                            "rename": ["column345"],
+                        }
+                    ],
+                },
+                {
+                    "name": "csv2.csv",
+                    "drop": ["column1", "column5"],
+                    "groupings": [
+                        {"mean": ["column2", "column3"], "rename": "mean23"},
+                        {"last": ["column4"], "rename": "column4"},
+                    ],
+                },
+            ],
+            "target": (
+                "phi/unittests/config_tests/sample_config_files/target1.csv",
+                ["column1", "column5"],
+            ),
+            "paths": [
+                (
+                    "phi/unittests/config_tests/sample_config_files/csv1.csv",
+                    ["column1", "column2"],
+                ),
+                (
+                    "phi/unittests/config_tests/sample_config_files/csv2.csv",
+                    ["column1", "column5"],
+                ),
+            ],
+        }
+
+        _params = get_config.parameters(
+            config="phi/unittests/config_tests/sample_config_files/config3.json"
+        )
+
+        self.assertEqual(_params, _expected)

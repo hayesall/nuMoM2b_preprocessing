@@ -1,0 +1,33 @@
+{
+  "csv_path": "phi/unittests/config_tests/sample_config_files/",
+  "files": [
+    {
+      "name": "csv1.csv",
+      "drop": ["column1", "column2"],
+      "groupings": [
+        {
+          "last": ["column3", "column4", "column5"],
+          "rename": ["column345"]
+        }
+      ]
+    },
+    {
+      "name": "csv2.csv",
+      "drop": ["column1", "column5"],
+      "groupings": [
+        {
+          "mean": ["column2", "column3"],
+          "rename": "mean23"
+        },
+        {
+          "last": ["column4"],
+          "rename": "column4"
+        }
+      ]
+    }
+  ],
+  "target": {
+    "name": "target1.csv",
+    "drop": ["column1", "column5"]
+  }
+}

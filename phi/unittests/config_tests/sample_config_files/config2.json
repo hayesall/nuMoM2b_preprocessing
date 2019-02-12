@@ -1,17 +1,17 @@
 {
-  "csv_path": "../Data/",
+  "csv_path": "phi/unittests/config_tests/sample_config_files/",
   "files": [
     {
-      "name": "Visit1.csv",
+      "name": "csv1.csv",
       "drop": ["column1", "column2"]
     },
     {
-      "name": "Screening.csv",
-      "drop": ["column5", "column1"]
+      "name": "csv2.csv",
+      "drop": ["column1", "column3"]
     }
   ],
   "target": {
-    "name": "pregnancy_outcomes.csv",
-    "drop": ["column1", "column5"]
+    "name": "target1.csv",
+    "drop": ["column1", "column2"]
   }
 }
