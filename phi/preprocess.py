@@ -62,6 +62,8 @@ def _aggregate_columns(data_frame, groupings):
 
     # TODO: This would make more sense as a class. That way we could do: ``frame.aggregate(operation, columns, rename)``
 
+    LOGGER.debug("Starting aggregation")
+
     for entry in groupings:
 
         _operation = entry["operator"]
@@ -71,6 +73,8 @@ def _aggregate_columns(data_frame, groupings):
             if entry.get("rename")
             else "{0}{1}".format(entry["operator"], str("".join(entry["columns"])))
         )
+
+        LOGGER.debug("{0} (operator), {1} (columns), {2} (rename-to)".format(_operation, str(_columns), _rename))
 
         if _operation == "mean":
 
@@ -82,6 +86,7 @@ def _aggregate_columns(data_frame, groupings):
             data_frame[_rename] = data_frame[_columns].ffill(axis=1).iloc[:, -1]
             data_frame = data_frame.drop(_columns, axis=1)
 
+    LOGGER.debug("Finished aggregation")
     return data_frame
 
 
