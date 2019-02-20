@@ -66,10 +66,9 @@ class RunPreprocessingTest(unittest.TestCase):
                 "column5_x": [float64("nan"), float64("nan"), 5.0],
                 "column2": [1, 1, 4],
                 "column4_y": [2.0, 3.0, float64("nan")],
-                "column5_y": ["a", "b", "c"]
+                "column5_y": ["a", "b", "c"],
             }
         )
 
         _target = preprocess.run(_parameters)
         assert_frame_equal(_expected, _target)
-

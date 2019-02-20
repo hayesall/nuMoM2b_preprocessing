@@ -89,14 +89,8 @@ class InitializeConfigurationTest(unittest.TestCase):
         _expected = {
             "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
             "files": [
-                {
-                    "name": "csv1.csv",
-                    "drop": ["column1", "column2"]
-                },
-                {
-                    "name": "csv2.csv",
-                    "drop": ["column3", "column4", "column5"]
-                },
+                {"name": "csv1.csv", "drop": ["column1", "column2"]},
+                {"name": "csv2.csv", "drop": ["column3", "column4", "column5"]},
             ],
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
@@ -116,13 +110,10 @@ class InitializeConfigurationTest(unittest.TestCase):
                 {
                     "operator": "last",
                     "columns": ["column3", "column4", "column5"],
-                    "rename": "last345"
+                    "rename": "last345",
                 },
-                {
-                    "operator": "mean",
-                    "columns": ["column1", "column2"],
-                },
-            ]
+                {"operator": "mean", "columns": ["column1", "column2"]},
+            ],
         }
 
         _params = get_config.parameters(

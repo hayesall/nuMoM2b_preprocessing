@@ -24,11 +24,7 @@ class PreprocessMeanTests(unittest.TestCase):
         """
 
         _input_table = DataFrame(
-            {
-                "ID": [0, 1, 1, 2],
-                "a": [1, 2, 3, 4],
-                "b": [2, 3, 4, 5],
-            }
+            {"ID": [0, 1, 1, 2], "a": [1, 2, 3, 4], "b": [2, 3, 4, 5]}
         )
         _groupings = [{"operator": "mean", "columns": ["a", "b"]}]
         _expected = DataFrame({"ID": [0, 1, 1, 2], "meanab": [1.5, 2.5, 3.5, 4.5]})
@@ -55,4 +51,3 @@ class PreprocessMeanTests(unittest.TestCase):
         _table = preprocess._aggregate_columns(_input_table, _groupings)
 
         assert_frame_equal(_expected, _table)
-
