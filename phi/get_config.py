@@ -24,7 +24,7 @@ Available Options
 
 * ``"groupings"``: List of objects describing how to aggregate columns
 
-  * ``"operator"``: "mean" or "last"
+  * ``"operator"``: "mean", "last", or "count"
   * ``"columns"``: List of column names to apply aggregation operator to. *These columns are dropped after aggregating*
   * ``"rename"``: [**optional**] Name to apply to the new column of aggregated values
 

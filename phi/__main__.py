@@ -112,6 +112,21 @@ if ARGS.run:
 
     _data = preprocess.run(PARAMETERS)
 
+    LOGGER.info("Completed pre-processing.")
+
+    # Drop the PublicID Column for learning/inference
+    LOGGER.info("Dropping `PublicID` column for learning/inference.")
+    _data = _data.drop("PublicID", axis=1)
+
+    # Drop NaN rows
+    LOGGER.info("Dropping NaN rows.")
+    _data = _data.dropna()
+
+    # Write to csv
+    LOGGER.info("Writing data to `data.csv` file.")
+    _data.to_csv("data.csv", index=False, na_rep="NaN")
+    LOGGER.info("Done writing data to `data.csv` file.")
+
     LOGGER.info("Reached bottom, shutting down logger.")
     logging.shutdown()
     exit(0)

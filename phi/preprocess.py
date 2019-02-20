@@ -86,6 +86,11 @@ def _aggregate_columns(data_frame, groupings):
             data_frame[_rename] = data_frame[_columns].ffill(axis=1).iloc[:, -1]
             data_frame = data_frame.drop(_columns, axis=1)
 
+        if _operation == "count":
+
+            data_frame[_rename] = data_frame[_columns].count(axis="columns")
+            data_frame = data_frame.drop(_columns, axis=1)
+
     LOGGER.debug("Finished aggregation")
     return data_frame
 
