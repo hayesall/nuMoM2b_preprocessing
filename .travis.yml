@@ -1,0 +1,25 @@
+sudo: false
+
+language: python
+
+env:
+  - SH=bash
+
+python:
+  - "3.5"
+  - "3.6"
+
+cache:
+  pip: true
+
+install:
+  - "pip install -r phi/requirements.txt"
+
+script:
+  - coverage run phi/unittests/tests.py
+
+before_install:
+  pip install codecov
+
+after_success:
+  codecov

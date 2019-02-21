@@ -11,5 +11,8 @@ setup(
     license='Not-Declared',
     author='Alexander L. Hayes (@batflyer)',
     author_email='alexander@batflyer.net',
-    description='Python API for experimenting with Precision Health Data'
+    description='Python API for experimenting with Precision Health Data',
+    entry_points={
+    'console_scripts': ['phi=phi.__main__']
+    },
 )

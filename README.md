@@ -1,6 +1,6 @@
-# Precision Health Initiative (φ)
+# nuMoM2b Preprocessing — Precision Health Initiative (φ)
 
-Main repository for the Machine Learning and Analytics side of the Precision Health Initiative (PHI).
+A module for creating reproducible partitions of the nuMoM2b data set based on configuration files.
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ Precision-Health-Initiative/
 │   ├── pregnancy_outcomes.csv
 │   ├── Screening.csv
 │   └── Visit1.csv
-└── PHI/
+└── nuMoM2b_preprocessing/
     └── README.md
 ```
 
@@ -29,7 +29,7 @@ Precision-Health-Initiative/
 Clone the repository from GitHub:
 
 ```bash
-git clone git@github.com:batflyer/PHI.git
+git clone git@github.com:batflyer/nuMoM2b_preprocessing.git
 ```
 
 If you're using Anaconda, this would be a good time to create an environment:
@@ -43,6 +43,70 @@ conda create -n PHI python=3.6
 ```bash
 pip install -r phi/requirements.txt
 ```
+
+## Using `nuMoM2b_preprocessing`
+
+* #### As a Package
+
+  Installing using the setup script adds a `phi` package.
+
+  ```bash
+  python setup.py install
+  ```
+
+  ... which can then be imported
+
+  ```python
+  from phi import get_config
+  from phi import preprocess
+
+  _params = get_config.parameters(config="phi_config.json")
+  ```
+
+* #### As a Commandline (CLI) Tool
+
+  Installing using `setup.py` adds an entry point to your default `bin/` directory.
+
+  ```bash
+  python setup.py install
+  ```
+
+  This adds a `phi` tool which can be invoked as follows:
+
+  ```
+  $ phi --help
+  usage: phi [-h] [-c CONFIG] [-l LOGGING] [-t] [-r]
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -c CONFIG, --config CONFIG
+                          Set the configuration file to read from
+                          [Default:phi_config.json].
+    -l LOGGING, --logging LOGGING
+                          Set the verbosity of the Python logger [Default:10].
+                          Follows Logging Levels.
+    -t, --test            Display information for unit tests, code coverage, and
+                          formatting.
+    -r, --run             Run the pipeline (require explicit interaction
+                          currently to help prevent accidents).
+  ```
+
+* #### As a Submodule
+
+  `nuMoM2b_preprocessing` acts as the first step in building classification pipelines. To incorporate it in later learning steps, it may be useful to have access to the methods as a submodule. For general documentation on using submodules, refer to the [Git Manual](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+
+  ```bash
+  git submodule add git@github.com:batflyer/nuMoM2b_preprocessing.git
+  ```
+
+  The modules in the package can then be accessed as normal.
+
+  ```python
+  from nuMoM2b_preprocessing.phi import get_config
+  from nuMoM2b_preprocessing.phi import preprocess
+
+  _params = get_config.parameters(config="phi_config.json")
+  ```
 
 ## Documentation
 
