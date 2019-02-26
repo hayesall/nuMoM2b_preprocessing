@@ -118,6 +118,9 @@ if ARGS.run:
     LOGGER.info("Dropping `PublicID` column for learning/inference.")
     _data = _data.drop("PublicID", axis=1)
 
+    # Convert the S and D values to NaN
+    _data = _data.replace(["D", "S"], float("nan"))
+
     # Drop NaN rows
     LOGGER.info("Dropping NaN rows.")
     _data = _data.dropna()
