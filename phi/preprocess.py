@@ -80,6 +80,20 @@ def _aggregate_columns(data_frame, groupings):
             )
         )
 
+        if _operation == "multiply_constant":
+
+            # "rename" is not used in "multiply_constant"
+
+            # "multiply_constant" must be accompanied by a constant
+            _constant = entry["constant"]
+
+            data_frame[_columns] = (
+                data_frame[_columns]
+                .replace(["D", "S"], np.float("nan"))
+                .astype("float64")
+                * _constant
+            )
+
         if _operation == "mean":
 
             data_frame[_rename] = np.mean(data_frame[_columns], axis=1)
