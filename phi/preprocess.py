@@ -171,7 +171,7 @@ def _build_table(config_parameters):
 
         _name, _drop = _data_tuple[0], _data_tuple[1]
 
-        _csv_data = pd.read_csv(_name, sep=",")
+        _csv_data = pd.read_csv(_name, sep=",", engine = "python")
         _log_columns(_name, str(list(_csv_data.columns)))
         _csv_data = _csv_data.drop(_drop, axis=1)
         _log_columns(_name, str(list(_csv_data.columns)))
