@@ -109,6 +109,29 @@ def _aggregate_columns(data_frame, groupings):
             data_frame[_rename] = data_frame[_columns].count(axis="columns")
             data_frame = data_frame.drop(_columns, axis=1)
 
+        if _operation == "normalized_difference":
+
+            # _columns[A, B, C] --> (A - B) / C
+            # Normalize a column with respect to a third column.
+
+            _A = (
+                data_frame[_columns[0]]
+                .replace(["D", "S"], np.float("nan"))
+                .astype("float64")
+            )
+            _B = (
+                data_frame[_columns[1]]
+                .replace(["D", "S"], np.float("nan"))
+                .astype("float64")
+            )
+            _C = (
+                data_frame[_columns[2]]
+                .replace(["D", "S"], np.float("nan"))
+                .astype("float64")
+            )
+
+            data_frame[_rename] = (_A - _B) / _C
+
     LOGGER.debug("Finished aggregation")
     return data_frame
 
