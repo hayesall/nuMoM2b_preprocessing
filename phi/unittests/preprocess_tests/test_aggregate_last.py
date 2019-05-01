@@ -89,16 +89,16 @@ class PreprocessLastTests(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column2"],
+                ["PublicID", "column1", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column3", "column4", "column5"],
+                    ["PublicID", "column3"],
                 ),
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
-                    ["column1", "column2", "column4", "column5"],
+                    ["PublicID", "column2"],
                 ),
             ],
             "groupings": [
@@ -132,12 +132,12 @@ class PreprocessLastTests(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1", "column2"],
+                ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column2"],
+                    ["PublicID", "column3", "column4", "column5"],
                 )
             ],
             "groupings": [

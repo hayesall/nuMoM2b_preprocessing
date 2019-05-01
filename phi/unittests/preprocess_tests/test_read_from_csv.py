@@ -27,13 +27,13 @@ class ReadTargetTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1", "column2"],
+                ["PublicID", "target_variable"],
             )
         }
 
-        _name, _drop = _parameters["target"][0], _parameters["target"][1]
+        _name, _variables = _parameters["target"][0], _parameters["target"][1]
 
-        _target = preprocess._build_target_table(_name, _drop)
+        _target = preprocess._build_target_table(_name, _variables)
         _expected = DataFrame(
             {"PublicID": ["A1", "B2", "B4"], "target_variable": [0, 0, 1]}
         )
@@ -49,13 +49,13 @@ class ReadTargetTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1"],
+                ["PublicID", "column2", "target_variable"],
             )
         }
 
-        _name, _drop = _parameters["target"][0], _parameters["target"][1]
+        _name, _variables = _parameters["target"][0], _parameters["target"][1]
 
-        _target = preprocess._build_target_table(_name, _drop)
+        _target = preprocess._build_target_table(_name, _variables)
         _expected = DataFrame(
             {
                 "PublicID": ["A1", "B2", "B4"],
@@ -75,13 +75,13 @@ class ReadTargetTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column2"],
+                ["PublicID", "column1", "target_variable"],
             )
         }
 
-        _name, _drop = _parameters["target"][0], _parameters["target"][1]
+        _name, _variables = _parameters["target"][0], _parameters["target"][1]
 
-        _target = preprocess._build_target_table(_name, _drop)
+        _target = preprocess._build_target_table(_name, _variables)
         _expected = DataFrame(
             {
                 "PublicID": ["A1", "B2", "B4"],
@@ -107,12 +107,12 @@ class ReadCSVTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1", "column2"],
+                ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column2", "column3", "column4"],
+                    ["PublicID", "column5"],
                 )
             ],
         }
@@ -137,12 +137,12 @@ class ReadCSVTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column2"],
+                ["PublicID", "column1", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column2"],
+                    ["PublicID", "column3", "column4", "column5"],
                 )
             ],
         }
@@ -170,16 +170,16 @@ class ReadCSVTest(unittest.TestCase):
         _parameters = {
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column2"],
+                ["PublicID", "column1", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column3", "column4", "column5"],
+                    ["PublicID", "column2"],
                 ),
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
-                    ["column1", "column2", "column4", "column5"],
+                    ["PublicID", "column3"],
                 ),
             ],
         }

@@ -3,15 +3,15 @@
   "files": [
     {
       "name": "csv1.csv",
-      "drop": ["column1", "column2"]
+      "variables": ["PublicID", "column4", "column5", "column3"]
     },
     {
       "name": "csv2.csv",
-      "drop": ["column1", "column3"]
+      "variables": ["PublicID", "column4", "column5", "column2"]
     }
   ],
   "target": {
     "name": "target1.csv",
-    "drop": ["column1", "column2"]
+    "variables": ["PublicID", "target_variable"]
   }
 }

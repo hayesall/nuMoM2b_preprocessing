@@ -55,21 +55,27 @@ class InitializeConfigurationTest(unittest.TestCase):
         _expected = {
             "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
             "files": [
-                {"name": "csv1.csv", "drop": ["column1", "column2"]},
-                {"name": "csv2.csv", "drop": ["column1", "column3"]},
+                {
+                    "name": "csv1.csv",
+                    "variables": ["PublicID", "column4", "column5", "column3"],
+                },
+                {
+                    "name": "csv2.csv",
+                    "variables": ["PublicID", "column4", "column5", "column2"],
+                },
             ],
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1", "column2"],
+                ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column2"],
+                    ["PublicID", "column4", "column5", "column3"],
                 ),
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
-                    ["column1", "column3"],
+                    ["PublicID", "column4", "column5", "column2"],
                 ),
             ],
         }
@@ -89,21 +95,24 @@ class InitializeConfigurationTest(unittest.TestCase):
         _expected = {
             "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
             "files": [
-                {"name": "csv1.csv", "drop": ["column1", "column2"]},
-                {"name": "csv2.csv", "drop": ["column3", "column4", "column5"]},
+                {"name": "csv1.csv", "variables": ["PublicID", "column1", "column2"]},
+                {
+                    "name": "csv2.csv",
+                    "variables": ["PublicID", "column3", "column4", "column5"],
+                },
             ],
             "target": (
                 "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
-                ["column1", "column2"],
+                ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
-                    ["column1", "column2"],
+                    ["PublicID", "column1", "column2"],
                 ),
                 (
                     "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
-                    ["column3", "column4", "column5"],
+                    ["PublicID", "column3", "column4", "column5"],
                 ),
             ],
             "groupings": [

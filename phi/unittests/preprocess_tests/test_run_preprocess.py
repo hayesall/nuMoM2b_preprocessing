@@ -36,8 +36,8 @@ class RunPreprocessingTest(unittest.TestCase):
             {
                 "PublicID": ["A1", "B2", "B4"],
                 "target_variable": [0, 0, 1],
-                "last345": [1.0, 3.0, 5.0],
-                "meancolumn1column2": [0.5, -5.0, 4.55],
+                "last345": ["a", "b", "c"],
+                "meancolumn1column2": [2.0, 2.0, 2.0],
             }
         )
 
@@ -61,12 +61,12 @@ class RunPreprocessingTest(unittest.TestCase):
             {
                 "PublicID": ["A1", "B2", "B4"],
                 "target_variable": [0, 0, 1],
-                "column3": [1, 2, 3],
                 "column4_x": [float64("nan"), 3.0, 4.0],
                 "column5_x": [float64("nan"), float64("nan"), 5.0],
-                "column2": [1, 1, 4],
+                "column3": [1, 2, 3],
                 "column4_y": [2.0, 3.0, float64("nan")],
                 "column5_y": ["a", "b", "c"],
+                "column2": [1, 1, 4],
             }
         )
 

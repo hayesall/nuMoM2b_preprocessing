@@ -3,16 +3,16 @@
   "files": [
     {
       "name": "csv1.csv",
-      "drop": ["column1", "column2"]
+      "variables": ["PublicID", "column1", "column2"]
     },
     {
       "name": "csv2.csv",
-      "drop": ["column3", "column4","column5"]
+      "variables": ["PublicID", "column3", "column4","column5"]
     }
   ],
   "target": {
     "name": "target1.csv",
-    "drop": ["column1", "column2"]
+    "variables": ["PublicID", "target_variable"]
   },
   "groupings": [
     {
