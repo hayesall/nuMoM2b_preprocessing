@@ -2,39 +2,41 @@
 Getting Started
 ===============
 
-This section describes how to organize this work and how to get the code running. Currently this assumes familiarity with Python projects, UNIX systems, and Git.
+This section describes how to get organized and get the code running. This will try to keep concepts
+as accessible as possible, but some familiarity with Python projects, UNIX systems, and Git would
+certainly be helpful.
 
 Getting Organized
 -----------------
 
-The running assumption is that ``Data/`` contains the .csv files representing the data set, and this ``PHI/`` repository contains the code and documentation.
+The running assumption will be that the nuMoM2b data is contained in a directory (likely unzipped from a
+``numom2b.zip``), and this ``nuMoM2b_preprocessing/`` repository is available on your local machine.
 
-Each may be stored as follows (though this may be tweaked through config files):
+For example, we find it helpful to organize work as follows (though these may be tweaked with config files):
 
-.. code-block:: bash
+.. code-block:: text
 
   Precision-Health-Initiative/
   ├── Data/
   │   ├── pregnancy_outcomes.csv
   │   ├── Screening.csv
   │   └── Visit1.csv
-  └── PHI/
-      └── README.md
+  └── nuMoM2b_preprocessing/
+      ├── README.md
+      └── phi/
 
-Getting Running
----------------
-
-Clone the repository from GitHub:
+``nuMoM2b_preprocessing`` may be cloned from GitHub:
 
 .. code-block:: bash
 
-  git clone git@github.com:batflyer/PHI.git
+    git clone https://github.com/batflyer/nuMoM2b_preprocessing.git
 
-If you're using Anaconda, this would be a good time to create an environment:
+If you're using `Anaconda <https://www.anaconda.com/distribution/>`_, this would be a good time to create an environment:
 
 .. code-block:: bash
 
-  conda create -n PHI python=3.6
+    conda create -n PHI python=3.7
+    conda activate PHI
 
 … and install dependencies.
 
@@ -45,7 +47,8 @@ If you're using Anaconda, this would be a good time to create an environment:
 Documentation
 -------------
 
-Documentation is not currently hosted externally, but local copies may be built using `Sphinx <http://www.sphinx-doc.org/en/master/>`_.
+Documentation is currently hosted at https://doc.nuMoM2b.org, but local copies may also be built using
+`Sphinx <http://www.sphinx-doc.org/en/master/>`_.
 
 A separate requirements file is in the ``documentation/`` directory.
 

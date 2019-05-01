@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 # -- Project information -----------------------------------------------------
 
-project = "PHI"
+project = "nuMoM2b"
 copyright = "2019, Alexander L. Hayes"
 author = "Alexander L. Hayes"
 
@@ -79,7 +79,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -106,7 +106,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "PHIdoc"
+htmlhelp_basename = "nuMoM2b_preprocessingdoc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -130,7 +130,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "PHI.tex", "PHI Documentation", "Alexander L. Hayes", "manual")
+    (master_doc, "nuMoM2b_preprocessing.tex", "nuMoM2b_preprocessing Documentation", "Alexander L. Hayes", "manual")
 ]
 
 
@@ -138,7 +138,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "phi", "PHI Documentation", [author], 1)]
+man_pages = [(master_doc, "nuMoM2b_preprocessing", "nuMoM2b_preprocessing Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------------
@@ -149,10 +149,10 @@ man_pages = [(master_doc, "phi", "PHI Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "PHI",
-        "PHI Documentation",
+        "nuMoM2b_preprocessing",
+        "nuMoM2b_preprocessing Documentation",
         author,
-        "PHI",
+        "nuMoM2b_preprocessing",
         "One line description of project.",
         "Miscellaneous",
     )
