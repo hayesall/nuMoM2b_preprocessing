@@ -17,6 +17,7 @@ import argparse
 import logging
 
 from . import get_config
+from . import preprocess
 
 # Argument Parser
 
@@ -40,12 +41,6 @@ PARSER.add_argument(
     "--test",
     action="store_true",
     help="Display information for unit tests, code coverage, and formatting.",
-)
-PARSER.add_argument(
-    "-r",
-    "--run",
-    action="store_true",
-    help="Run the pipeline (require explicit interaction currently to help prevent accidents).",
 )
 
 # Data Section
@@ -86,10 +81,10 @@ PARAMETERS = get_config.parameters(config=ARGS.config)
 
 # Initialize logging options
 
-_logfile = PARAMETERS["log_file"] if PARAMETERS.get("log_file") else "debug.log"
+LOGFILE = PARAMETERS["log_file"] if PARAMETERS.get("log_file") else "debug.log"
 
 logging.basicConfig(
-    filename="{0}".format(_logfile),
+    filename="{0}".format(LOGFILE),
     level=ARGS.logging,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
@@ -105,38 +100,28 @@ if ARGS.test:
     LOGGER.info("Reached bottom, shutting down logger.")
     exit(0)
 
-if ARGS.run:
-    from . import preprocess
+LOGGER.info("Pre-processing the data.")
 
-    LOGGER.info("Pre-processing the data.")
+DATA = preprocess.run(PARAMETERS)
 
-    _data = preprocess.run(PARAMETERS)
+LOGGER.info("Completed pre-processing.")
 
-    LOGGER.info("Completed pre-processing.")
+# Drop the PublicID Column for learning/inference
+LOGGER.info("Dropping `PublicID` column for learning/inference.")
+DATA = DATA.drop("PublicID", axis=1)
 
-    # Drop the PublicID Column for learning/inference
-    LOGGER.info("Dropping `PublicID` column for learning/inference.")
-    _data = _data.drop("PublicID", axis=1)
+# Convert the S and D values to NaN
+DATA = DATA.replace(["D", "S"], float("nan"))
 
-    # Convert the S and D values to NaN
-    _data = _data.replace(["D", "S"], float("nan"))
+# Drop NaN rows
+LOGGER.info("Dropping NaN rows.")
+DATA = DATA.dropna()
 
-    # Drop NaN rows
-    LOGGER.info("Dropping NaN rows.")
-    _data = _data.dropna()
+# Write to csv
+LOGGER.info("Writing data to `data.csv` file.")
+DATA.to_csv("data.csv", index=False, na_rep="NaN")
+LOGGER.info("Done writing data to `data.csv` file.")
 
-    # Write to csv
-    LOGGER.info("Writing data to `data.csv` file.")
-    _data.to_csv("data.csv", index=False, na_rep="NaN")
-    LOGGER.info("Done writing data to `data.csv` file.")
-
-    LOGGER.info("Reached bottom, shutting down logger.")
-    logging.shutdown()
-    exit(0)
-else:
-    LOGGER.info("-r/--run must be specified to run the code.")
-    LOGGER.info("Reached bottom, shutting down logger.")
-    exit(1)
-
-
-print(ARGS, PARAMETERS)
+LOGGER.info("Reached bottom, shutting down logger.")
+logging.shutdown()
+exit(0)

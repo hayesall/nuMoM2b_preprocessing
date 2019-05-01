@@ -136,7 +136,7 @@ def _aggregate_columns(data_frame, groupings):
     return data_frame
 
 
-def _build_target_table(file_name, columns_to_drop):
+def _build_target_table(file_name, columns):
     """
     :param file_name:
     :param columns_to_drop:
@@ -145,8 +145,7 @@ def _build_target_table(file_name, columns_to_drop):
 
     target = pd.read_csv(file_name, sep=",")
     _log_columns(file_name, str(list(target.columns)))
-
-    target = target.drop(columns_to_drop, axis=1)
+    target = target[columns]
     _log_columns(file_name, str(list(target.columns)))
 
     return target
@@ -163,17 +162,17 @@ def _build_table(config_parameters):
     LOGGER.debug("Data Paths {0}".format(config_parameters["paths"]))
 
     _name = config_parameters["target"][0]
-    _drop = config_parameters["target"][1]
+    _variables = config_parameters["target"][1]
 
-    target = _build_target_table(_name, _drop)
+    target = _build_target_table(_name, _variables)
 
     for _data_tuple in config_parameters["paths"]:
 
-        _name, _drop = _data_tuple[0], _data_tuple[1]
+        _name, _variables = _data_tuple[0], _data_tuple[1]
 
-        _csv_data = pd.read_csv(_name, sep=",", engine = "python")
+        _csv_data = pd.read_csv(_name, sep=",", engine="python")
         _log_columns(_name, str(list(_csv_data.columns)))
-        _csv_data = _csv_data.drop(_drop, axis=1)
+        _csv_data = _csv_data[_variables]
         _log_columns(_name, str(list(_csv_data.columns)))
 
         target = pd.merge(target, _csv_data, how="inner", on=["PublicID"])

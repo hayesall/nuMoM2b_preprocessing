@@ -85,19 +85,23 @@ def parameters(config="phi_config.json"):
         # Create a path to the file for easier reading later.
         _file_path = "{0}{1}".format(_parameters["csv_path"], _file["name"])
 
-        # Deal with potential "drop" list.
-        _drop = _file["drop"] if _file.get("drop") else []
+        # Deal with the potential "variables" list
+        _variables = _file["variables"] if _file.get("variables") else []
 
         # Append a tuple of these to the _path_list
-        _path_list.append(tuple([_file_path, _drop]))
+        _path_list.append(tuple([_file_path, _variables]))
 
     _parameters["paths"] = _path_list
 
     # Similar process for the target values.
     _file_path = "{0}{1}".format(_parameters["csv_path"], _parameters["target"]["name"])
-    _drop = _parameters["target"]["drop"] if _parameters["target"].get("drop") else []
+    _variables = (
+        _parameters["target"]["variables"]
+        if _parameters["target"].get("variables")
+        else []
+    )
 
-    _parameters["target"] = tuple([_file_path, _drop])
+    _parameters["target"] = tuple([_file_path, _variables])
 
     return _parameters
 
