@@ -1,0 +1,37 @@
+===============================
+Categorical Screening Questions
+===============================
+
+This config files extracts results of screening questions asked during the
+screening interview. Most of these are the sort of questions which would
+be asked in a clinical setting, but also might be filled in by a patient.
+
+``"csv_path"`` and ``"target.name"`` may need to be adjusted depending on
+file locations on your specific machine.
+
+.. code-block:: json
+
+  {
+    "comments": [
+      "Screening questions asked during visit 1.",
+      "These are primarily yes/no questions.",
+    ],
+    "log_file": "nuMoM2b_screening_questions.log",
+    "csv_path": "~/Desktop/PrecisionHealth/Data/numom_data/",
+    "target": {
+      "name": "Ancillary/Pregnancy_outcomes.csv",
+      "variables": ["PublicID", "oDM"]
+    },
+    "files": [
+      {
+        "name": "Screening_Admin_Visits/Visit1.csv",
+        "variables": [
+          "PublicID", "V1AD03", "V1AD05", "V1AD17", "V1AD18", "V1AF01",
+          "V1AF03", "V1AF03a1", "V1AF03a2", "V1AF03a3", "V1AF03a4",
+          "V1AF03b", "V1AF03c", "V1AF04", "V1AF14", "V1AG01", "V1AG02",
+          "V1AG03", "V1AI01"
+        ]
+      }
+    ],
+    "groupings": []
+  }

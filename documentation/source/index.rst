@@ -4,6 +4,20 @@ nuMoM2b_preprocessing
 
 A Python package for pre-processing ``nuMoM2b`` data with configuration files.
 
+.. image:: https://readthedocs.org/projects/numom2b-preprocessing/badge/?version=latest
+   :target: https://doc.numom2b.org/en/latest/?badge=latest
+   :alt: Documentation Status
+.. image:: https://travis-ci.com/hayesall/nuMoM2b_preprocessing.svg?branch=master
+   :target: https://travis-ci.com/hayesall/nuMoM2b_preprocessing
+   :alt: Build Status
+.. image:: https://codecov.io/gh/hayesall/nuMoM2b_preprocessing/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/hayesall/nuMoM2b_preprocessing
+   :alt: Code Coverage
+
+.. image:: _static/img/config_file_image.png
+   :alt: Config file image.
+   :target: config_files/01.html
+
 This is one component within a wider research project for predicting adverse events
 over the course of a woman's pregnancy. This package serves the dual role of assisting
 with pre-processing tasks and for producing reproducible partitions of the data based
@@ -23,16 +37,24 @@ on configuration files.
    :hidden:
    :caption: API:
 
-   api/phi
-   api/phi.get_config
-   api/phi.preprocess
+   api/numom2b_preprocessing
+   api/numom2b_preprocessing.get_config
+   api/numom2b_preprocessing.preprocess
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+   :hidden:
+   :caption: Sample Config Files:
+
+   config_files/*
 
 .. toctree::
   :hidden:
   :caption: External Links
 
-  GitHub Repository <https://github.com/batflyer/nuMoM2b_preprocessing>
-  Bug Tracker <https://github.com/batflyer/nuMoM2b_preprocessing/issues>
+  GitHub Repository <https://github.com/hayesall/nuMoM2b_preprocessing>
+  Bug Tracker <https://github.com/hayesall/nuMoM2b_preprocessing/issues>
 
 Maintained by `Alexander L. Hayes <https://hayesall.com>`_, a Ph.D. student with the
 `Indiana University ProHealth Group <https://prohealth.sice.indiana.edu>`_

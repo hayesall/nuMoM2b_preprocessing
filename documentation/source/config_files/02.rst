@@ -1,0 +1,74 @@
+===============================
+Continuous Visit-1 Measurements
+===============================
+
+This normalizes measurements taken as part of the screening questions or the
+visit-1 measurements.
+
+``"csv_path"`` and ``"target.name"`` may need to be adjusted depending on
+file locations on your specific machine.
+
+.. code-block:: json
+
+  {
+    "comments": [
+      "Numeric attributes from the screening questions and first visit."
+    ],
+    "log_file": "debug.log",
+    "csv_path": "~/Desktop/PrecisionHealth/Data/numom_data/",
+    "files": [
+      {
+        "name": "Screening_Admin_Visits/Visit1.csv",
+        "variables": [
+          "PublicID", "V1BA02a", "V1BA02b", "V1BA02c",
+          "V1BA03a", "V1BA03b", "V1BA03c",
+          "V1BA04a", "V1BA04b", "V1BA04c",
+          "V1BA05a", "V1BA05b", "V1BA05c",
+          "V1BA06a1", "V1BA06a2",
+          "V1BA06b1", "V1BA06b2",
+          "V1BA07a", "V1BA07b", "V1BA07c"
+        ]
+      }
+    ],
+    "target": {
+      "name": "Ancillary/Pregnancy_outcomes.csv",
+      "variables": ["PublicID", "oDM"]
+    },
+    "groupings": [
+      {
+        "operator": "last",
+        "columns": ["V1BA02a", "V1BA02b", "V1BA02c"],
+        "rename": "V1BA02_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA04a", "V1BA04b", "V1BA04c"],
+        "rename": "V1BA04_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA07a", "V1BA07b", "V1BA07c"],
+        "rename": "V1BA07_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA03a", "V1BA03b", "V1BA03c"],
+        "rename": "V1BA03_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA05a", "V1BA05b", "V1BA05c"],
+        "rename": "V1BA05_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA06a1", "V1BA06a2"],
+        "rename": "V1BA06a_last"
+      },
+      {
+        "operator": "last",
+        "columns": ["V1BA06b1", "V1BA06b2"],
+        "rename": "V1BA06b_last"
+      }
+    ]
+  }

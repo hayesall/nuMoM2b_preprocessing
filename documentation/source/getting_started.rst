@@ -23,13 +23,13 @@ For example, we find it helpful to organize work as follows (though these may be
   │   └── Visit1.csv
   └── nuMoM2b_preprocessing/
       ├── README.md
-      └── phi/
+      └── numom2b_preprocessing/
 
 ``nuMoM2b_preprocessing`` may be cloned from GitHub:
 
 .. code-block:: bash
 
-    git clone https://github.com/batflyer/nuMoM2b_preprocessing.git
+    git clone https://github.com/hayesall/nuMoM2b_preprocessing.git
 
 If you're using `Anaconda <https://www.anaconda.com/distribution/>`_, this would be a good time to create an environment:
 
@@ -42,7 +42,7 @@ If you're using `Anaconda <https://www.anaconda.com/distribution/>`_, this would
 
 .. code-block:: bash
 
-  pip install -r phi/requirements.txt
+  pip install -r numom2b_preprocessing/requirements.txt
 
 Documentation
 -------------

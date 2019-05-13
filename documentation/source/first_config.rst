@@ -63,7 +63,7 @@ run the script as a command-line module.
 
 .. code-block:: bash
 
-    $ python -m phi -c example_config.json
+    $ python -m numom2b_preprocessing -c example_config.json
 
 .. code-block:: text
 
@@ -99,7 +99,7 @@ to keep track of which record corresponds to which person.
 
 .. code-block:: bash
 
-    $ python -m phi -c example_config.json
+    $ python -m numom2b_preprocessing -c example_config.json
 
 .. code-block:: text
 
@@ -151,7 +151,7 @@ This can be written as follows:
 
 .. code-block:: bash
 
-    $ python -m phi -c example_config.json
+    $ python -m numom2b_preprocessing -c example_config.json
 
 .. code-block:: text
 
