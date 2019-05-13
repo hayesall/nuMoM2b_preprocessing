@@ -13,10 +13,10 @@ cache:
   pip: true
 
 install:
-  - "pip install -r phi/requirements.txt"
+  - "pip install -r numom2b_preprocessing/requirements.txt"
 
 script:
-  - coverage run phi/unittests/tests.py
+  - coverage run numom2b_preprocessing/unittests/tests.py
 
 before_install:
   pip install codecov

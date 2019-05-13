@@ -2,19 +2,28 @@
 
 A module for creating reproducible partitions of the nuMoM2b data set based on configuration files.
 
+[![Documentation Status](https://readthedocs.org/projects/numom2b-preprocessing/badge/?version=latest)](https://doc.numom2b.org/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.com/hayesall/nuMoM2b_preprocessing.svg?branch=master)](https://travis-ci.com/hayesall/nuMoM2b_preprocessing)
+[![codecov](https://codecov.io/gh/hayesall/nuMoM2b_preprocessing/branch/master/graph/badge.svg)](https://codecov.io/gh/hayesall/nuMoM2b_preprocessing)
+
+* Maintained by [Alexander L. Hayes](https://hayesall.com)
+* Documentation on https://doc.numom2b.org/en/latest/
+
 ## Getting Started
 
-Data should not be stored here.
+**Data should not be stored here.**
 
-This section describes how to organize this work and how to get the code running. Currently this assumes familiarity with Python projects, UNIX systems, and Git.
+Familiarity with Python, UNIX systems, and Git would be helpful.
 
-#### Getting Organized
+### Getting Organized
 
-The running assumption is that `Data/` contains the .csv files representing the data set, and this `PHI/` repository contains the code and documentation.
+The running assumption is that `Data/` contains the .csv files representing
+the data set, and this `nuMoM2b_preprocessing/` repository contains the code
+and documentation.
 
-Each may be stored as follows (though this may be tweaked through config files):
+Each might be stored as follows (though this may be tweaked through config files):
 
-```bash
+```
 Precision-Health-Initiative/
 ├── Data/
 │   ├── pregnancy_outcomes.csv
@@ -24,18 +33,18 @@ Precision-Health-Initiative/
     └── README.md
 ```
 
-#### Getting Running
+### Getting Running
 
 Clone the repository from GitHub:
 
 ```bash
-git clone git@github.com:batflyer/nuMoM2b_preprocessing.git
+git clone git@github.com:hayesall/nuMoM2b_preprocessing.git
 ```
 
 If you're using Anaconda, this would be a good time to create an environment:
 
 ```bash
-conda create -n PHI python=3.6
+conda create -n PHI python=3.7
 ```
 
 ... and install dependencies.
@@ -46,9 +55,9 @@ pip install -r phi/requirements.txt
 
 ## Using `nuMoM2b_preprocessing`
 
-* #### As a Package
+* ### As a Package
 
-  Installing using the setup script adds a `phi` package.
+  Installing using the setup script adds a `numom2b_preprocessing` package.
 
   ```bash
   python setup.py install
@@ -57,13 +66,13 @@ pip install -r phi/requirements.txt
   ... which can then be imported
 
   ```python
-  from phi import get_config
-  from phi import preprocess
+  import numom2b_preprocessing
 
-  _params = get_config.parameters(config="phi_config.json")
+  _params = numom2b_preprocessing.parameters(config="phi_config.json")
+  numom2b_preprocessing.run(_params)
   ```
 
-* #### As a Commandline (CLI) Tool
+* ### As a Commandline (CLI) Tool
 
   Installing using `setup.py` adds an entry point to your default `bin/` directory.
 
@@ -71,46 +80,38 @@ pip install -r phi/requirements.txt
   python setup.py install
   ```
 
-  This adds a `phi` tool which can be invoked as follows:
-
-  ```
-  $ phi --help
-  usage: phi [-h] [-c CONFIG] [-l LOGGING] [-t] [-r]
-
-  optional arguments:
-    -h, --help            show this help message and exit
-    -c CONFIG, --config CONFIG
-                          Set the configuration file to read from
-                          [Default:phi_config.json].
-    -l LOGGING, --logging LOGGING
-                          Set the verbosity of the Python logger [Default:10].
-                          Follows Logging Levels.
-    -t, --test            Display information for unit tests, code coverage, and
-                          formatting.
-    -r, --run             Run the pipeline (require explicit interaction
-                          currently to help prevent accidents).
-  ```
-
-* #### As a Submodule
-
-  `nuMoM2b_preprocessing` acts as the first step in building classification pipelines. To incorporate it in later learning steps, it may be useful to have access to the methods as a submodule. For general documentation on using submodules, refer to the [Git Manual](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+  This adds a `numom2b_preprocessing` tool which can be invoked as follows:
 
   ```bash
-  git submodule add git@github.com:batflyer/nuMoM2b_preprocessing.git
+  numom2b_preprocessing --help
+  ```
+
+* ### As a Submodule
+
+  `nuMoM2b_preprocessing` acts as the first step in building classification
+  pipelines. To incorporate it in later learning steps, it may be useful to
+  have access to the methods as a submodule. For general documentation on using
+  submodules, refer to the
+  [Git Manual](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+
+  ```bash
+  git submodule add git@github.com:hayesall/nuMoM2b_preprocessing.git
   ```
 
   The modules in the package can then be accessed as normal.
 
   ```python
-  from nuMoM2b_preprocessing.phi import get_config
-  from nuMoM2b_preprocessing.phi import preprocess
+  import nuMoM2b_preprocessing.numom2b_preprocessing
 
-  _params = get_config.parameters(config="phi_config.json")
+  _params = numom2b_preprocessing.parameters(config="phi_config.json")
+  numom2b_preprocessing.run(_params)
   ```
 
-## Documentation
+## [nuMoM2b_preprocessing Documentation](https://doc.numom2b.org/en/latest/)
 
-Documentation is not currently hosted externally, but local copies may be built using [Sphinx](http://www.sphinx-doc.org/en/master/).
+Documentation is not currently hosted at https://doc.numom2b.org/en/latest/,
+but local copies may be built using
+[Sphinx](http://www.sphinx-doc.org/en/master/).
 
 A separate requirements file is in the `documentation/` directory.
 
