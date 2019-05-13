@@ -1,13 +1,7 @@
 # Copyright 2019 Alexander L. Hayes
 
 """
-================
-preprocessing.py
-================
-
-A script for aligning the columns of the Gestational Diabetes data.
-
-Assumes that a Data folder exists.
+Combine and aggregate columns across tables.
 """
 
 import logging
@@ -22,9 +16,9 @@ def run(config_parameters):
     :arg config_parameters:
     :return: pandas.core.frame.DataFrame
 
-    Run the pre-processing script based on config parameters.
+    Preprocess the data according to the configuration parameters.
 
-    ``conf_parameters`` should be passed from get_config.parameters()
+    ``conf_parameters`` should be passed from :meth:`numom2b_preprocessing.get_config.parameters`
     """
 
     _table = _build_table(config_parameters)

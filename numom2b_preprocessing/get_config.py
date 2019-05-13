@@ -1,69 +1,8 @@
 # Copyright 2019 Alexander L. Hayes
 
 """
-=============
-get_config.py
-=============
-
 Read parameters from a ``config.json`` file and make these available through
 a ``get_config.parameters()`` function.
-
-Available Options
------------------
-
-* ``"csv_path"``: Path to directory where all ``.csv`` files are located
-* ``"files"``: List of entries naming individual files
-
-  * ``"name"``: ``.csv`` file name (``csv_path`` will be appended to the beginning)
-  * ``"drop"``: [**optional**] Names of columns to drop from an individual file
-
-* ``"target"``: Target file (what you want to predict)
-
-  * ``"name"``: ``.csv`` file name (``csv_path`` will be appended to the beginning)
-  * ``"drop"``: [**optional**] Names of columns to drop from the target file
-
-* ``"groupings"``: List of objects describing how to aggregate columns
-
-  * ``"operator"``: "mean", "last", or "count"
-  * ``"columns"``: List of column names to apply aggregation operator to. *These columns are dropped after aggregating*
-  * ``"rename"``: [**optional**] Name to apply to the new column of aggregated values
-
-  If none is specified, the column is named according to which columns were aggregated and what operator was used
-
-Example Usage
--------------
-
->>> import get_config
->>> _params = get_config.parameters(config="phi_config.json")
-
-Example File
-------------
-
-.. code-block:: json
-
-    {
-      "csv_path": "../../Data/",
-      "files": [
-        {"name": "Visit1.csv", "drop": []},
-        {"name": "Screening.csv"}
-      ],
-      "target": {
-          "name": "pregnancy_outcomes.csv",
-          "drop": []
-      },
-      "groupings": [
-        {
-          "operator": "mean",
-          "columns": ["column1", "column2"],
-          "rename": "average_1_2"
-        },
-        {
-          "operator": "last",
-          "columns": ["measure1", "measure2", "measure3"],
-          "rename": "most_recent_measurement"
-        }
-      ]
-    }
 """
 
 import json
@@ -71,14 +10,17 @@ import json
 
 def parameters(config="phi_config.json"):
     """
-    Read the parameters from config.
+    Read the parameters from a configuration file.
+
+    :arg config: JSON configuration path/file_name.json
+    :type config: str
+    :return: dict
     """
 
     with open(config) as config_file:
         _parameters = json.load(config_file)
 
-    # This is way too complicated for what it is doing.
-
+    # TODO: This could be simplified. Refactor where commented.
     _path_list = []
     for _file in _parameters["files"]:
 

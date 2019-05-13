@@ -28,19 +28,25 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "phi/unittests/config_tests/sample_config_files/",
+            "csv_path": "numom2b_preprocessing/unittests/config_tests/sample_config_files/",
             "files": [{"name": "csv1.csv"}, {"name": "csv2.csv"}],
             "target": (
-                "phi/unittests/config_tests/sample_config_files/target1.csv",
+                "numom2b_preprocessing/unittests/config_tests/sample_config_files/target1.csv",
                 [],
             ),
             "paths": [
-                ("phi/unittests/config_tests/sample_config_files/csv1.csv", []),
-                ("phi/unittests/config_tests/sample_config_files/csv2.csv", []),
+                (
+                    "numom2b_preprocessing/unittests/config_tests/sample_config_files/csv1.csv",
+                    [],
+                ),
+                (
+                    "numom2b_preprocessing/unittests/config_tests/sample_config_files/csv2.csv",
+                    [],
+                ),
             ],
         }
         _params = get_config.parameters(
-            config="phi/unittests/config_tests/sample_config_files/config1.json"
+            config="numom2b_preprocessing/unittests/config_tests/sample_config_files/config1.json"
         )
 
         self.assertEqual(_params, _expected)
@@ -53,7 +59,7 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
+            "csv_path": "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/",
             "files": [
                 {
                     "name": "csv1.csv",
@@ -65,22 +71,22 @@ class InitializeConfigurationTest(unittest.TestCase):
                 },
             ],
             "target": (
-                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
+                "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/target1.csv",
                 ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["PublicID", "column4", "column5", "column3"],
                 ),
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv2.csv",
                     ["PublicID", "column4", "column5", "column2"],
                 ),
             ],
         }
         _params = get_config.parameters(
-            config="phi/unittests/config_tests/sample_config_files/config2.json"
+            config="numom2b_preprocessing/unittests/config_tests/sample_config_files/config2.json"
         )
 
         self.assertEqual(_params, _expected)
@@ -93,7 +99,7 @@ class InitializeConfigurationTest(unittest.TestCase):
         """
 
         _expected = {
-            "csv_path": "phi/unittests/preprocess_tests/sample_csv_files/",
+            "csv_path": "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/",
             "files": [
                 {"name": "csv1.csv", "variables": ["PublicID", "column1", "column2"]},
                 {
@@ -102,16 +108,16 @@ class InitializeConfigurationTest(unittest.TestCase):
                 },
             ],
             "target": (
-                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
+                "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/target1.csv",
                 ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["PublicID", "column1", "column2"],
                 ),
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv2.csv",
                     ["PublicID", "column3", "column4", "column5"],
                 ),
             ],
@@ -126,7 +132,7 @@ class InitializeConfigurationTest(unittest.TestCase):
         }
 
         _params = get_config.parameters(
-            config="phi/unittests/config_tests/sample_config_files/config3.json"
+            config="numom2b_preprocessing/unittests/config_tests/sample_config_files/config3.json"
         )
 
         self.assertEqual(_params, _expected)

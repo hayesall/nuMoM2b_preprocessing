@@ -1,18 +1,14 @@
 {
   "log_file": "debug.log",
   "csv_path": "../Data/",
+  "target": {
+      "name": "Ancillary/Pregnancy_outcomes.csv",
+      "variables": ["PublicID", "oDM"]
+  },
   "files": [
     {
-      "name": "Visit1.csv",
-      "drop": []
-    },
-    {
-      "name": "Screening.csv",
-      "drop": []
+      "name": "Screening_Admin_Visits/Visit1.csv",
+      "variables": ["PublicID", "V1BA01_KG", "V1BA01_LB"]
     }
-  ],
-  "target": {
-    "name": "pregnancy_outcomes.csv",
-    "drop": []
-  }
+  ]
 }

@@ -1,5 +1,5 @@
 {
-  "csv_path": "phi/unittests/config_tests/sample_config_files/",
+  "csv_path": "numom2b_preprocessing/unittests/config_tests/sample_config_files/",
   "files": [
     {
       "name": "csv1.csv"

@@ -88,16 +88,16 @@ class PreprocessLastTests(unittest.TestCase):
 
         _parameters = {
             "target": (
-                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
+                "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/target1.csv",
                 ["PublicID", "column1", "target_variable"],
             ),
             "paths": [
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["PublicID", "column3"],
                 ),
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv2.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv2.csv",
                     ["PublicID", "column2"],
                 ),
             ],
@@ -131,12 +131,12 @@ class PreprocessLastTests(unittest.TestCase):
 
         _parameters = {
             "target": (
-                "phi/unittests/preprocess_tests/sample_csv_files/target1.csv",
+                "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/target1.csv",
                 ["PublicID", "target_variable"],
             ),
             "paths": [
                 (
-                    "phi/unittests/preprocess_tests/sample_csv_files/csv1.csv",
+                    "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/csv1.csv",
                     ["PublicID", "column3", "column4", "column5"],
                 )
             ],

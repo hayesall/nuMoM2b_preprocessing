@@ -29,7 +29,7 @@ class RunPreprocessingTest(unittest.TestCase):
         """
 
         _parameters = get_config.parameters(
-            "phi/unittests/config_tests/sample_config_files/config3.json"
+            "numom2b_preprocessing/unittests/config_tests/sample_config_files/config3.json"
         )
 
         _expected = DataFrame(
@@ -54,7 +54,7 @@ class RunPreprocessingTest(unittest.TestCase):
         """
 
         _parameters = get_config.parameters(
-            "phi/unittests/config_tests/sample_config_files/config2.json"
+            "numom2b_preprocessing/unittests/config_tests/sample_config_files/config2.json"
         )
 
         _expected = DataFrame(

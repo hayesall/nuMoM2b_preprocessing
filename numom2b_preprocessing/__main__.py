@@ -1,27 +1,26 @@
 # Copyright 2019 Alexander L. Hayes
 
 """
-===========
-__main__.py
-===========
-
-Main script for interacting with the package from the command line.
-
-TODO
-====
-
-* Options to modify config values and write them back to file.
+Create reproducible partitions of the nuMoM2b data set based on
+configuration files.
 """
 
 import argparse
 import logging
 
+from ._meta import __version__, __copyright__, __license__, __email__
 from . import get_config
 from . import preprocess
 
 # Argument Parser
 
-PARSER = argparse.ArgumentParser()
+PARSER = argparse.ArgumentParser(
+    prog="nuMoM2b_preprocessing@{0}".format(__version__),
+    description=__doc__,
+    epilog="{0} ({1}). Distributed under the terms of the {2} License.".format(
+        __copyright__, __email__, __license__
+    ),
+)
 PARSER.add_argument(
     "-c",
     "--config",
@@ -37,10 +36,20 @@ PARSER.add_argument(
     help="Set the verbosity of the Python logger [Default:10]. Follows Logging Levels.",
 )
 PARSER.add_argument(
+    "-o",
+    "--output",
+    type=str,
+    default="data.csv",
+    help="File name to write output to [Default:data.csv].",
+)
+PARSER.add_argument(
     "-t",
     "--test",
     action="store_true",
     help="Display information for unit tests, code coverage, and formatting.",
+)
+PARSER.add_argument(
+    "--drop-nan", action="store_true", help="Drop rows containing NaN values."
 )
 
 # Data Section
@@ -69,7 +78,7 @@ From the base of the repository:
 
 .. code-block:: bash
 
-    coverage run phi/unittests/tests.py
+    coverage run numom2b_preprocessing/unittests/tests.py
     coverage html
     open htmlcov/index.html
 """
@@ -110,17 +119,14 @@ LOGGER.info("Completed pre-processing.")
 LOGGER.info("Dropping `PublicID` column for learning/inference.")
 DATA = DATA.drop("PublicID", axis=1)
 
-# Convert the S and D values to NaN
-DATA = DATA.replace(["D", "S"], float("nan"))
-
-# Drop NaN rows
-LOGGER.info("Dropping NaN rows.")
-DATA = DATA.dropna()
+if ARGS.drop_nan:
+    LOGGER.info("Dropping NaN rows.")
+    DATA = DATA.dropna()
 
 # Write to csv
-LOGGER.info("Writing data to `data.csv` file.")
-DATA.to_csv("data.csv", index=False, na_rep="NaN")
-LOGGER.info("Done writing data to `data.csv` file.")
+LOGGER.info("Writing data to file " + ARGS.output)
+DATA.to_csv(ARGS.output, index=False, na_rep="NaN")
+LOGGER.info("Done writing data to file " + ARGS.output)
 
 LOGGER.info("Reached bottom, shutting down logger.")
 logging.shutdown()
