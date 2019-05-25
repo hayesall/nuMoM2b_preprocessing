@@ -23,6 +23,9 @@ def run(config_parameters):
 
     _table = _build_table(config_parameters)
 
+    if config_parameters.get("cleaning"):
+        _table = _clean_variables(_table, config_parameters["cleaning"])
+
     if config_parameters.get("groupings"):
         _table = _aggregate_columns(_table, config_parameters["groupings"])
 
@@ -43,6 +46,35 @@ def _log_columns(csv_path, string_of_columns):
         _log_columns(config_parameters["target"], _target_columns)
     """
     LOGGER.debug("File: {0}; Columns: {1}".format(csv_path, string_of_columns))
+
+
+def _clean_variables(data_frame, cleanings):
+    """
+    Conditionally modify variables.
+
+    :param pd.DataFrame data_frame: Data frame
+    :param cleanings:
+    :return: pandas.core.frame.DataFrame
+    """
+
+    LOGGER.debug("Starting variable cleaning")
+
+    for entry in cleanings:
+
+        _columns = entry["columns"]
+
+        if "default_value" in entry:
+            # If a default value is specified, replace NaN values with "default_value"
+            LOGGER.debug(
+                "{0} columns, {1} default_value".format(
+                    _columns, entry["default_value"]
+                )
+            )
+
+            data_frame[_columns] = data_frame[_columns].fillna(entry["default_value"])
+
+    LOGGER.debug("Finished variable cleaning")
+    return data_frame
 
 
 def _aggregate_columns(data_frame, groupings):
