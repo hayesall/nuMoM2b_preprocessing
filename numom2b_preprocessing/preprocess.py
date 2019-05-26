@@ -63,6 +63,33 @@ def _clean_variables(data_frame, cleanings):
 
         _columns = entry["columns"]
 
+        if "drop_if" in entry:
+
+            # TODO: Document order-of-operations assumptions: 'drop_if' occurs before 'default_value'
+
+            # TODO: Need a condition to handle dropping NaN values
+
+            if len(_columns) > 1:
+                raise Exception("Cannot use 'drop_if' with multiple columns: ", entry)
+
+            _condition, _condition_value = entry["drop_if"]
+
+            LOGGER.debug(
+                "drop_if: {0} {1} {2}".format(_columns, _condition, _condition_value)
+            )
+
+            if _condition == "==":
+                data_frame = data_frame.drop(np.flatnonzero(data_frame[_columns] == _condition_value))
+
+            if _condition == "!=":
+                data_frame = data_frame.drop(np.flatnonzero(data_frame[_columns] != _condition_value))
+
+            if _condition == ">":
+                data_frame = data_frame.drop(np.flatnonzero(data_frame[_columns] > _condition_value))
+
+            if _condition == "<":
+                data_frame = data_frame.drop(np.flatnonzero(data_frame[_columns] < _condition_value))
+
         if "default_value" in entry:
             # If a default value is specified, replace NaN values with "default_value"
             LOGGER.debug(
