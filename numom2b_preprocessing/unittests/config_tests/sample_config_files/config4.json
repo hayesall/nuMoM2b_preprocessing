@@ -1,39 +1,48 @@
 {
-  "comments": [
-    "config4.json is intended to be a simple way to test with a 'cleaning' object",
-    "This will replace the NaN values in csv1.csv and  csv2.csv with specific values",
-    "then apply mean aggregation."
-  ],
-  "csv_path": "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/",
-  "files": [
-    {
-      "name": "csv1.csv",
-      "variables": ["PublicID", "column4", "column5"]
+    "comments": [
+	"config4.json is intended to be a simple way to test with a 'cleaning' object",
+	"This will replace the NaN values in csv1.csv and  csv2.csv with specific values",
+	"then apply mean aggregation."
+    ],
+    "csv_path": "numom2b_preprocessing/unittests/preprocess_tests/sample_csv_files/",
+    "files": [
+	{
+	    "name": "csv1.csv",
+	    "variables": ["PublicID", "column4", "column5"]
+	},
+	{
+	    "name": "csv2.csv",
+	    "variables": ["PublicID", "column3"]
+	}
+    ],
+    "target": {
+	"name": "target1.csv",
+	"variables": ["PublicID", "target_variable"]
     },
-    {
-      "name": "csv2.csv",
-      "variables": ["PublicID", "column3"]
-    }
-  ],
-  "target": {
-    "name": "target1.csv",
-    "variables": ["PublicID", "target_variable"]
-  },
-  "cleaning": [
-    {
-      "columns": ["column4"],
-      "default_value": 10
-    },
-    {
-      "columns": ["column5"],
-      "default_value": 20
-    }
-  ],
-  "groupings": [
-    {
-      "operator": "mean",
-      "columns": ["column3", "column4", "column5"],
-      "rename": "mean345"
-    }
-  ]
+    "clean_variables": [
+	{
+	    "operator": "default_value",
+	    "columns": ["column4"],
+	    "value": 10
+	},
+	{
+	    "operator": "default_value",
+	    "columns": ["column5"],
+	    "value": 20
+	}
+    ],
+    "aggregate_columns": [
+	{
+	    "operator": "mean",
+	    "columns": ["column3", "column4", "column5"],
+	    "rename": "mean345"
+	}
+    ],
+    "filter": [
+	{
+	    "operator": "drop_if_greater",
+	    "columns": ["mean345"],
+	    "value": 100
+	}
+    ]
 }

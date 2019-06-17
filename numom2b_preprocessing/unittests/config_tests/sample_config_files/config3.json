@@ -14,7 +14,7 @@
     "name": "target1.csv",
     "variables": ["PublicID", "target_variable"]
   },
-  "groupings": [
+  "aggregate_columns": [
     {
       "operator": "last",
       "columns": ["column3", "column4", "column5"],

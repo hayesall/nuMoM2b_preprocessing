@@ -87,7 +87,7 @@ class RunPreprocessingTest(unittest.TestCase):
             {
                 "PublicID": ["A1", "B2", "B4"],
                 "target_variable": [0, 0, 1],
-                "mean345": [31/3, 25/3, 4.0]
+                "mean345": [31 / 3, 25 / 3, 4.0],
             }
         )
 

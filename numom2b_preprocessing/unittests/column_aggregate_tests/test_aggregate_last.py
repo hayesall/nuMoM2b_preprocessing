@@ -11,6 +11,7 @@ import unittest
 
 # Tests for:
 from ... import preprocess
+from ... import aggregate_columns
 
 
 class PreprocessLastTests(unittest.TestCase):
@@ -34,9 +35,9 @@ class PreprocessLastTests(unittest.TestCase):
         _groupings = [{"operator": "last", "columns": ["a", "b"]}]
         _expected = DataFrame({"ID": [0, 1, 1, 2], "lastab": [2.0, 3.0, 4.0, 5.0]})
 
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-
-        assert_frame_equal(_expected, _table)
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_aggregate_last_columns2():
@@ -56,9 +57,9 @@ class PreprocessLastTests(unittest.TestCase):
             {"ID": [1.0, -9.2, 6.4, 7.4], "c": [1.0, 2.0, float64("nan"), 2.0]}
         )
 
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-
-        assert_frame_equal(_expected, _table)
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_aggregate_last_columns3():
@@ -74,8 +75,10 @@ class PreprocessLastTests(unittest.TestCase):
         )
         _groupings = [{"operator": "last", "columns": ["a", "b"], "rename": "="}]
         _expected = DataFrame({"ID": ["a", "b"], "=": [float64("nan"), float64("nan")]})
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-        assert_frame_equal(_expected, _table)
+
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_target1_csv1_csv2_aggregate_last():
@@ -101,7 +104,7 @@ class PreprocessLastTests(unittest.TestCase):
                     ["PublicID", "column2"],
                 ),
             ],
-            "groupings": [
+            "aggregate_columns": [
                 {
                     "operator": "last",
                     "columns": ["column2", "column3"],
@@ -111,8 +114,6 @@ class PreprocessLastTests(unittest.TestCase):
         }
 
         _table = preprocess._build_table(_parameters)
-        _table = preprocess._aggregate_columns(_table, _parameters["groupings"])
-
         _expected = DataFrame(
             {
                 "PublicID": ["A1", "B2", "B4"],
@@ -122,7 +123,9 @@ class PreprocessLastTests(unittest.TestCase):
             }
         )
 
-        assert_frame_equal(_expected, _table)
+        _ca = aggregate_columns.ColumnAggregator(_table)
+        _ca.aggregate(_parameters["aggregate_columns"])
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_target1_csv1_csv2_aggregate_last_columns():
@@ -140,14 +143,12 @@ class PreprocessLastTests(unittest.TestCase):
                     ["PublicID", "column3", "column4", "column5"],
                 )
             ],
-            "groupings": [
+            "aggregate_columns": [
                 {"operator": "last", "columns": ["column3", "column4", "column5"]}
             ],
         }
 
         _table = preprocess._build_table(_parameters)
-        _table = preprocess._aggregate_columns(_table, _parameters["groupings"])
-
         _expected = DataFrame(
             {
                 "PublicID": ["A1", "B2", "B4"],
@@ -156,4 +157,7 @@ class PreprocessLastTests(unittest.TestCase):
             }
         )
 
-        assert_frame_equal(_expected, _table)
+        _ca = aggregate_columns.ColumnAggregator(_table)
+        _ca.aggregate(_parameters["aggregate_columns"])
+
+        assert_frame_equal(_expected, _ca.frame)

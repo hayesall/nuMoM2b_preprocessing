@@ -3,9 +3,11 @@
 from setuptools import setup
 from setuptools import find_packages
 
+from numom2b_preprocessing._meta import __version__
+
 setup(
     name="numom2b_preprocessing",
-    version="0.1.0",
+    version=__version__,
     packages=find_packages(exclude=["unittests"]),
     url="https://github.com/hayesall/nuMoM2b_preprocessing",
     license="MIT",

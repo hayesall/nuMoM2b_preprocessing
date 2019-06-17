@@ -10,7 +10,7 @@ import numpy as np
 import unittest
 
 # Tests for:
-from ... import preprocess
+from ...clean_variables import VariableCleaner
 
 
 class CleanDefaultValueSingleColumnTests(unittest.TestCase):
@@ -32,10 +32,12 @@ class CleanDefaultValueSingleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": ["a"], "default_value": 0.0}]
-        _table = preprocess._clean_variables(_table_1, _cleanings)
+        _cleanings = [{"operator": "default_value", "columns": ["a"], "value": 0.0}]
 
-        assert_frame_equal(_table, _table_1)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
+
+        assert_frame_equal(_table_1, _vc.frame)
 
     @staticmethod
     def test_clean_default_2():
@@ -51,7 +53,7 @@ class CleanDefaultValueSingleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": ["b"], "default_value": 0.0}]
+        _cleanings = [{"operator": "default_value", "columns": ["b"], "value": 0.0}]
         _expected = DataFrame(
             {
                 "a": [1.0, 2.0, 3.0],
@@ -60,9 +62,10 @@ class CleanDefaultValueSingleColumnTests(unittest.TestCase):
                 "d": [np.nan, np.nan, np.nan],
             }
         )
-        _table = preprocess._clean_variables(_table_1, _cleanings)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_clean_default_3():
@@ -78,7 +81,7 @@ class CleanDefaultValueSingleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": "d", "default_value": 0.0}]
+        _cleanings = [{"operator": "default_value", "columns": ["d"], "value": 0.0}]
         _expected = DataFrame(
             {
                 "a": [1.0, 2.0, 3.0],
@@ -87,9 +90,10 @@ class CleanDefaultValueSingleColumnTests(unittest.TestCase):
                 "d": [0.0, 0.0, 0.0],
             }
         )
-        _table = preprocess._clean_variables(_table_1, _cleanings)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _vc.frame)
 
 
 class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
@@ -111,7 +115,9 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": ["a", "c"], "default_value": 0.0}]
+        _cleanings = [
+            {"operator": "default_value", "columns": ["a", "c"], "value": 0.0}
+        ]
         _expected = DataFrame(
             {
                 "a": [1.0, 2.0, 3.0],
@@ -120,9 +126,10 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
                 "d": [np.nan, np.nan, np.nan],
             }
         )
-        _table = preprocess._clean_variables(_table_1, _cleanings)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_clean_multiple_default_2():
@@ -138,7 +145,9 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": ["a", "b"], "default_value": 1.0}]
+        _cleanings = [
+            {"operator": "default_value", "columns": ["a", "b"], "value": 1.0}
+        ]
         _expected = DataFrame(
             {
                 "a": [1.0, 2.0, 3.0],
@@ -147,9 +156,10 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
                 "d": [np.nan, np.nan, np.nan],
             }
         )
-        _table = preprocess._clean_variables(_table_1, _cleanings)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_clean_multiple_default_3():
@@ -165,7 +175,9 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
             }
         )
 
-        _cleanings = [{"columns": ["b", "d"], "default_value": 2.0}]
+        _cleanings = [
+            {"operator": "default_value", "columns": ["b", "d"], "value": 2.0}
+        ]
         _expected = DataFrame(
             {
                 "a": [1.0, 2.0, 3.0],
@@ -174,6 +186,8 @@ class CleanDefaultValueMultipleColumnTests(unittest.TestCase):
                 "d": [2.0, 2.0, 2.0],
             }
         )
-        _table = preprocess._clean_variables(_table_1, _cleanings)
 
-        assert_frame_equal(_expected, _table)
+        _vc = VariableCleaner(_table_1)
+        _vc.clean(_cleanings)
+
+        assert_frame_equal(_expected, _vc.frame)
