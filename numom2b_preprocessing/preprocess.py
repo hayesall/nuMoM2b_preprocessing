@@ -4,6 +4,9 @@
 Combine and aggregate columns across tables.
 """
 
+from .aggregate_columns import ColumnAggregator
+from .clean_variables import VariableCleaner
+from .row_filter import RowFilter
 import logging
 import numpy as np
 import pandas as pd
@@ -23,8 +26,33 @@ def run(config_parameters):
 
     _table = _build_table(config_parameters)
 
+    if config_parameters.get("clean_variables"):
+        _vc = VariableCleaner(_table)
+        _vc.clean(config_parameters["clean_variables"])
+        _table = _vc.frame
+
     if config_parameters.get("groupings"):
-        _table = _aggregate_columns(_table, config_parameters["groupings"])
+
+        print(
+            "Deprecation Warning: 'groupings' will be removed in 0.3.0. Use 'aggregate_columns' instead.'"
+        )
+        LOGGER.warning(
+            "Deprecation Warning: 'groupings' will be removed in 0.3.0. Use 'aggregate_columns' instead.'"
+        )
+
+        _ca = ColumnAggregator(_table)
+        _ca.aggregate(config_parameters["groupings"])
+        _table = _ca.frame
+
+    if config_parameters.get("aggregate_columns"):
+        _ca = ColumnAggregator(_table)
+        _ca.aggregate(config_parameters["aggregate_columns"])
+        _table = _ca.frame
+
+    if config_parameters.get("filter"):
+        _rf = RowFilter(_table)
+        _rf.filter(config_parameters["filter"])
+        _table = _rf.frame
 
     return _table
 
@@ -43,91 +71,6 @@ def _log_columns(csv_path, string_of_columns):
         _log_columns(config_parameters["target"], _target_columns)
     """
     LOGGER.debug("File: {0}; Columns: {1}".format(csv_path, string_of_columns))
-
-
-def _aggregate_columns(data_frame, groupings):
-    """
-    Mutate the data frame by aggregating columns according to configuration parameters,
-    then drop the existing columns.
-
-    :arg ``config_parameters["groupings"]``
-    :return: pandas.core.frame.DataFrame
-    """
-
-    # TODO: This would make more sense as a class. That way we could do: ``frame.aggregate(operation, columns, rename)``
-
-    LOGGER.debug("Starting aggregation")
-
-    for entry in groupings:
-
-        _operation = entry["operator"]
-        _columns = entry["columns"]
-        _rename = (
-            entry["rename"]
-            if entry.get("rename")
-            else "{0}{1}".format(entry["operator"], str("".join(entry["columns"])))
-        )
-
-        LOGGER.debug(
-            "{0} (operator), {1} (columns), {2} (rename-to)".format(
-                _operation, str(_columns), _rename
-            )
-        )
-
-        if _operation == "multiply_constant":
-
-            # "rename" is not used in "multiply_constant"
-
-            # "multiply_constant" must be accompanied by a constant
-            _constant = entry["constant"]
-
-            data_frame[_columns] = (
-                data_frame[_columns]
-                .replace(["D", "S"], np.float("nan"))
-                .astype("float64")
-                * _constant
-            )
-
-        if _operation == "mean":
-
-            data_frame[_rename] = np.mean(data_frame[_columns], axis=1)
-            data_frame = data_frame.drop(_columns, axis=1)
-
-        if _operation == "last":
-
-            data_frame[_rename] = data_frame[_columns].ffill(axis=1).iloc[:, -1]
-            data_frame = data_frame.drop(_columns, axis=1)
-
-        if _operation == "count":
-
-            data_frame[_rename] = data_frame[_columns].count(axis="columns")
-            data_frame = data_frame.drop(_columns, axis=1)
-
-        if _operation == "normalized_difference":
-
-            # _columns[A, B, C] --> (A - B) / C
-            # Normalize a column with respect to a third column.
-
-            _A = (
-                data_frame[_columns[0]]
-                .replace(["D", "S"], np.float("nan"))
-                .astype("float64")
-            )
-            _B = (
-                data_frame[_columns[1]]
-                .replace(["D", "S"], np.float("nan"))
-                .astype("float64")
-            )
-            _C = (
-                data_frame[_columns[2]]
-                .replace(["D", "S"], np.float("nan"))
-                .astype("float64")
-            )
-
-            data_frame[_rename] = (_A - _B) / _C
-
-    LOGGER.debug("Finished aggregation")
-    return data_frame
 
 
 def _build_target_table(file_name, columns):

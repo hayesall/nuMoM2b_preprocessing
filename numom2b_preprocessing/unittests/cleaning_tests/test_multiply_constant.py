@@ -23,6 +23,7 @@ import unittest
 
 # Tests for:
 from ... import preprocess
+from ...clean_variables import VariableCleaner
 
 
 class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
@@ -48,11 +49,10 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
         _input_table = DataFrame(
             {"ID": [0, 1, 1, 2], "a": [1, 1, 1, 1], "b": [2, 3, 4, 5]}
         )
-        _groupings = [
-            {"operator": "multiply_constant", "columns": ["a"], "constant": 1}
-        ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-        assert_frame_equal(_input_table, _table)
+        _groupings = [{"operator": "multiply_constant", "columns": ["a"], "value": 1}]
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_input_table, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_2():
@@ -61,12 +61,11 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
         """
 
         _input_table = DataFrame({"ID": [0, 1, 2], "A": [1, 2, 3], "B": [3, 2, 1]})
-        _groupings = [
-            {"operator": "multiply_constant", "columns": ["A"], "constant": 2}
-        ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-        _expected = DataFrame({"ID": [0, 1, 2], "A": [2.0, 4.0, 6.0], "B": [3, 2, 1]})
-        assert_frame_equal(_expected, _table)
+        _groupings = [{"operator": "multiply_constant", "columns": ["A"], "value": 2}]
+        _expected = DataFrame({"ID": [0, 1, 2], "A": [2, 4, 6], "B": [3, 2, 1]})
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_two_columns_1():
@@ -78,10 +77,11 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
 
         _input_table = DataFrame({"ID": [0, 1], "A": [1, 2], "B": [3, 4], "C": [5, 6]})
         _groupings = [
-            {"operator": "multiply_constant", "columns": ["A", "B"], "constant": 1}
+            {"operator": "multiply_constant", "columns": ["A", "B"], "value": 1}
         ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-        assert_frame_equal(_input_table, _table)
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_input_table, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_two_columns_2():
@@ -93,13 +93,14 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
 
         _input_table = DataFrame({"ID": [0, 1], "A": [1, 2], "B": [3, 4], "C": [5, 6]})
         _groupings = [
-            {"operator": "multiply_constant", "columns": ["A", "B"], "constant": 3}
+            {"operator": "multiply_constant", "columns": ["A", "B"], "value": 3.0}
         ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
         _expected = DataFrame(
             {"ID": [0, 1], "A": [3.0, 6.0], "B": [9.0, 12.0], "C": [5, 6]}
         )
-        assert_frame_equal(_expected, _table)
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_two_columns_one_between():
@@ -109,13 +110,14 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
 
         _input_table = DataFrame({"ID": [0, 1], "A": [1, 2], "B": [3, 4], "C": [5, 6]})
         _groupings = [
-            {"operator": "multiply_constant", "columns": ["A", "C"], "constant": 4}
+            {"operator": "multiply_constant", "columns": ["A", "C"], "value": 4.0}
         ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
         _expected = DataFrame(
             {"ID": [0, 1], "A": [4.0, 8.0], "B": [3, 4], "C": [20.0, 24.0]}
         )
-        assert_frame_equal(_expected, _table)
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_expected, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_nan_values_1():
@@ -126,11 +128,10 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
         """
 
         _input_table = DataFrame({"ID": ["a", "b"], "A": [float("nan"), float("nan")]})
-        _groupings = [
-            {"operator": "multiply_constant", "columns": ["A"], "constant": 2}
-        ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
-        assert_frame_equal(_input_table, _table)
+        _groupings = [{"operator": "multiply_constant", "columns": ["A"], "value": 2.0}]
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_input_table, _vc.frame)
 
     @staticmethod
     def test_aggregate_multiply_constant_nan_values_2():
@@ -142,10 +143,11 @@ class PreprocessMultiplyConstantTestsGeneralTests(unittest.TestCase):
             {"ID": ["A", "B"], "A": [float("nan"), 2], "B": [2, float("nan")]}
         )
         _groupings = [
-            {"operator": "multiply_constant", "columns": ["B", "A"], "constant": 2}
+            {"operator": "multiply_constant", "columns": ["B", "A"], "value": 2.0}
         ]
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
         _expected = DataFrame(
             {"ID": ["A", "B"], "A": [float("nan"), 4], "B": [4, float("nan")]}
         )
-        assert_frame_equal(_expected, _table)
+        _vc = VariableCleaner(_input_table)
+        _vc.clean(_groupings)
+        assert_frame_equal(_expected, _vc.frame)

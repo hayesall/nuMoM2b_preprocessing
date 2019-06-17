@@ -72,3 +72,24 @@ class RunPreprocessingTest(unittest.TestCase):
 
         _target = preprocess.run(_parameters)
         assert_frame_equal(_expected, _target)
+
+    @staticmethod
+    def test_run_preprocessing_with_config4():
+        """
+        Configuration test which checks correctness of "cleaning" object.
+        """
+
+        _parameters = get_config.parameters(
+            "numom2b_preprocessing/unittests/config_tests/sample_config_files/config4.json"
+        )
+
+        _expected = DataFrame(
+            {
+                "PublicID": ["A1", "B2", "B4"],
+                "target_variable": [0, 0, 1],
+                "mean345": [31 / 3, 25 / 3, 4.0],
+            }
+        )
+
+        _target = preprocess.run(_parameters)
+        assert_frame_equal(_expected, _target)

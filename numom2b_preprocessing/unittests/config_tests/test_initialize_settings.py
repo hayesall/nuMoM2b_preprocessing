@@ -121,7 +121,7 @@ class InitializeConfigurationTest(unittest.TestCase):
                     ["PublicID", "column3", "column4", "column5"],
                 ),
             ],
-            "groupings": [
+            "aggregate_columns": [
                 {
                     "operator": "last",
                     "columns": ["column3", "column4", "column5"],

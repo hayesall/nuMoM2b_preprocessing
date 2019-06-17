@@ -33,6 +33,14 @@ on configuration files.
    first_config
 
 .. toctree::
+   :glob:
+   :maxdepth: 1
+   :hidden:
+   :caption: Sample Config Files:
+
+   config_files/*
+
+.. toctree::
    :maxdepth: 1
    :hidden:
    :caption: API:
@@ -42,12 +50,13 @@ on configuration files.
    api/numom2b_preprocessing.preprocess
 
 .. toctree::
-   :glob:
    :maxdepth: 1
    :hidden:
-   :caption: Sample Config Files:
+   :caption: Advanced Features
 
-   config_files/*
+   api/numom2b_preprocessing.variable_cleaner
+   api/numom2b_preprocessing.aggregate_columns
+   api/numom2b_preprocessing.filter
 
 .. toctree::
   :hidden:

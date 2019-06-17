@@ -10,12 +10,12 @@ from numpy import float64
 import unittest
 
 # Tests for:
-from ... import preprocess
+from ... import aggregate_columns
 
 
 class PreprocessCountTests(unittest.TestCase):
     """
-    Tests for the ``preprocess._aggregate_columns`` module. Assert final data frames match expectations.
+    Tests for the ``aggregate_columns.ColumnAggregator._count`` module. Assert final data frames match expectations.
     """
 
     @staticmethod
@@ -34,9 +34,10 @@ class PreprocessCountTests(unittest.TestCase):
         _groupings = [{"operator": "count", "columns": ["a", "b"]}]
         _expected = DataFrame({"ID": [0, 1, 1, 2], "countab": [1, 1, 1, 1]})
 
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_aggregate_count_columns_2():
@@ -50,9 +51,10 @@ class PreprocessCountTests(unittest.TestCase):
         _groupings = [{"operator": "count", "columns": ["a", "b"]}]
         _expected = DataFrame({"ID": ["a", "b", "c"], "countab": [2, 2, 2]})
 
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _ca.frame)
 
     @staticmethod
     def test_aggregate_count_columns_3():
@@ -105,6 +107,28 @@ class PreprocessCountTests(unittest.TestCase):
             {"PublicID": [4, 3, 2, 1, 0], "count54321": [0, 1, 2, 3, 4]}
         )
 
-        _table = preprocess._aggregate_columns(_input_table, _groupings)
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca.aggregate(_groupings)
 
-        assert_frame_equal(_expected, _table)
+        assert_frame_equal(_expected, _ca.frame)
+
+    @staticmethod
+    def test_aggregate_count_columns_4():
+        """
+        Test aggregating with the "last" operation on an example DataFrame using _count.
+        """
+
+        _input_table = DataFrame(
+            {
+                "ID": [0, 1, 1, 2],
+                "a": [float64("nan"), float64("nan"), float64("nan"), float64("nan")],
+                "b": [2, 3, 4, 5],
+            }
+        )
+        _groupings = [{"operator": "count", "columns": ["a", "b"]}]
+        _expected = DataFrame({"ID": [0, 1, 1, 2], "countab": [1, 1, 1, 1]})
+
+        _ca = aggregate_columns.ColumnAggregator(_input_table)
+        _ca._count(["a", "b"], "countab")
+
+        assert_frame_equal(_expected, _ca.frame)
