@@ -50,7 +50,10 @@ class RowFilter:
             raise Exception(
                 "Cannot use 'drop_if_equal' with multiple columns: ", columns
             )
-        self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] == value))
+        if value == "NaN":
+            self.frame = self.frame.dropna(subset=columns)
+        else:
+            self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] == value))
 
     def _not_equal(self, columns, value):
         if len(columns) > 1:

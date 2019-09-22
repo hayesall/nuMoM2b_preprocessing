@@ -27,13 +27,13 @@ class ColumnAggregator:
         :param operations_list: List of dictionaries with 'operator' and 'columns' keys.
 
         Examples:
-        
+
         >>> data_frame = pd.DataFrame({"ID": [0, 1, 2], "a": [3.3, 4.5, 1.2], "b": [3, 2, 4})
         >>> ca = ColumnAggregator()
         >>> ca.aggregate(
         ...     [
         ...         {
-        ...             "operator": "mean", 
+        ...             "operator": "mean",
         ...             "columns": ["a, "b"],
         ...             "rename": "mean_a_b",
         ...         },
@@ -42,7 +42,13 @@ class ColumnAggregator:
         """
         LOGGER.debug("Starting column aggregation.")
 
-        operations = {"mean": self._mean, "last": self._last, "count": self._count}
+        operations = {
+            "mean": self._mean,
+            "last": self._last,
+            "count": self._count,
+            "max": self._max,
+            "sum": self._sum,
+        }
 
         for aggregation in operations_list:
             _operation = aggregation["operator"]
@@ -59,6 +65,14 @@ class ColumnAggregator:
             operations[_operation](_columns, _rename)
 
         LOGGER.debug("Finished column aggregation.")
+
+    def _sum(self, columns, rename):
+        self.frame[rename] = np.sum(self.frame[columns], axis=1)
+        self.frame = self.frame.drop(columns, axis=1)
+
+    def _max(self, columns, rename):
+        self.frame[rename] = np.max(self.frame[columns], axis=1)
+        self.frame = self.frame.drop(columns, axis=1)
 
     def _mean(self, columns, rename):
         self.frame[rename] = np.mean(self.frame[columns], axis=1)
