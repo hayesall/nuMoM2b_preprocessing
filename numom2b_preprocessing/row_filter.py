@@ -6,7 +6,6 @@ Conditionally filter rows.
 
 import logging
 import numpy as np
-import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
 

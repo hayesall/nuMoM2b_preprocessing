@@ -8,7 +8,6 @@ from .aggregate_columns import ColumnAggregator
 from .clean_variables import VariableCleaner
 from .row_filter import RowFilter
 import logging
-import numpy as np
 import pandas as pd
 
 LOGGER = logging.getLogger(__name__)

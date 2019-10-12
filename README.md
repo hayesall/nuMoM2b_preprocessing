@@ -3,6 +3,7 @@
 A module for creating reproducible partitions of the nuMoM2b data set based on configuration files.
 
 [![Documentation Status](https://readthedocs.org/projects/numom2b-preprocessing/badge/?version=latest)](https://doc.numom2b.org/en/latest/?badge=latest)
+[![LGTM Code Review](https://img.shields.io/lgtm/grade/python/github/hayesall/nuMoM2b_preprocessing?label=code%20quality&logo=lgtm)](https://lgtm.com/projects/g/hayesall/nuMoM2b_preprocessing/context:python)
 [![Build Status](https://travis-ci.com/hayesall/nuMoM2b_preprocessing.svg?branch=master)](https://travis-ci.com/hayesall/nuMoM2b_preprocessing)
 [![codecov](https://codecov.io/gh/hayesall/nuMoM2b_preprocessing/branch/master/graph/badge.svg)](https://codecov.io/gh/hayesall/nuMoM2b_preprocessing)
 
