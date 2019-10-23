@@ -15,7 +15,6 @@ LOGGER = logging.getLogger(__name__)
 
 def run(config_parameters):
     """
-    :arg config_parameters:
     :return: pandas.core.frame.DataFrame
 
     Preprocess the data according to the configuration parameters.
@@ -74,8 +73,6 @@ def _log_columns(csv_path, string_of_columns):
 
 def _build_target_table(file_name, columns):
     """
-    :param file_name:
-    :param columns_to_drop:
     :return: pandas.core.frame.DataFrame
     """
 

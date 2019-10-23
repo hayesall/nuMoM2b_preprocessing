@@ -31,7 +31,7 @@ class ColumnAggregator:
         >>> data_frame = pd.DataFrame({"ID": [0, 1, 2], "a": [3.3, 4.5, 1.2], "b": [3, 2, 4})
         >>> ca = ColumnAggregator()
         >>> ca.aggregate(
-        ...     [
+                [
         ...         {
         ...             "operator": "mean",
         ...             "columns": ["a, "b"],
@@ -46,6 +46,7 @@ class ColumnAggregator:
             "mean": self._mean,
             "last": self._last,
             "count": self._count,
+            "min": self._min,
             "max": self._max,
             "sum": self._sum,
         }
@@ -72,6 +73,10 @@ class ColumnAggregator:
 
     def _max(self, columns, rename):
         self.frame[rename] = np.max(self.frame[columns], axis=1)
+        self.frame = self.frame.drop(columns, axis=1)
+
+    def _min(self, columns, rename):
+        self.frame[rename] = np.min(self.frame[columns], axis=1)
         self.frame = self.frame.drop(columns, axis=1)
 
     def _mean(self, columns, rename):
