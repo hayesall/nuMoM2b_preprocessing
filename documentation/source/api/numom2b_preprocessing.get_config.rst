@@ -1,6 +1,6 @@
-==============
+##############
 ``get_config``
-==============
+##############
 
 .. automodule:: numom2b_preprocessing.get_config
     :members:
@@ -8,7 +8,7 @@
     :show-inheritance:
 
 Available Options
------------------
+=================
 
 * ``"csv_path"``: Path to directory where all ``.csv`` files are located
 * ``"files"``: List of entries naming individual files
@@ -21,7 +21,7 @@ Available Options
   * ``"name"``: ``.csv`` file name (``csv_path`` will be appended to the beginning)
   * ``"variables"``: Names of columns to include from the target file
 
-* ``"groupings"``: List of objects describing how to aggregate columns
+* ``"aggregate_columns"``: List of objects describing how to aggregate columns
 
   * ``"operator"``: "mean", "last", or "count"
   * ``"columns"``: List of column names to apply aggregation operator to. *These columns are dropped after aggregating*
@@ -30,13 +30,13 @@ Available Options
   If none is specified, the column is named according to which columns were aggregated and what operator was used
 
 Example Usage
--------------
+=============
 
 >>> from numom2b_preprocessing import get_config
 >>> _params = get_config.parameters(config="phi_config.json")
 
 Example File
-------------
+============
 
 .. code-block:: json
 
@@ -62,5 +62,5 @@ Example File
           ]
         }
       ],
-      "groupings": []
+      "aggregate_columns": []
     }

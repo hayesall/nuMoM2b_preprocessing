@@ -34,7 +34,7 @@ file locations on your specific machine.
       "name": "Ancillary/Pregnancy_outcomes.csv",
       "variables": ["PublicID", "oDM"]
     },
-    "groupings": [
+    "aggregate_columns": [
       {
         "operator": "last",
         "columns": ["V1BA02a", "V1BA02b", "V1BA02c"],
