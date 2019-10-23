@@ -33,5 +33,5 @@ file locations on your specific machine.
         ]
       }
     ],
-    "groupings": []
+    "aggregate_columns": []
   }

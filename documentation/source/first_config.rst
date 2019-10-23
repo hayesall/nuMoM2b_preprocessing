@@ -1,6 +1,6 @@
-===================
+###################
 Configuration Files
-===================
+###################
 
 Perhaps you want to know whether a woman's *weight during the first visit* might be
 informative for determining whether or not she develops gestational diabetes later
@@ -29,7 +29,7 @@ does not work yet, but shows us all the keys that we will need to work with.
         "csv_path": "../FullData/numom_data/",
         "target": {},
         "files": [],
-        "groupings": []
+        "aggregate_columns": []
     }
 
 Let's start with the ``"target"``. The target is the file that contains information
@@ -55,7 +55,7 @@ we want to include.
             "variables": ["PublicID", "oDM"]
         },
         "files": [],
-        "groupings": []
+        "aggregate_columns": []
     }
 
 Adding this to ``example_config.json`` is enough to produce a ``data.csv`` when we
@@ -94,7 +94,7 @@ to keep track of which record corresponds to which person.
                 "variables": ["PublicID", "V1BA01_KG", "V1BA01_LB"]
             }
         ],
-        "groupings": []
+        "aggregate_columns": []
     }
 
 .. code-block:: bash
@@ -109,8 +109,8 @@ to keep track of which record corresponds to which person.
     3.0,NaN,144
     2.0,76,NaN
 
-Now that we have the variables we want, we can use the ``"groupings"`` section to convert
-them to common units. Operations defined in the ``"groupings"`` section are executed from
+Now that we have the variables we want, we can use the ``"aggregate_columns"`` section to convert
+them to common units. Operations defined in the ``"aggregate_columns"`` section are executed from
 top to bottom.
 
 First, we multiply the ``"V1BA01_KG"`` variable by 2.20462, which converts the measurements to
@@ -135,7 +135,7 @@ This can be written as follows:
           "variables": ["PublicID", "V1BA01_KG", "V1BA01_LB"]
         }
       ],
-      "groupings": [
+      "aggregate_columns": [
         {
           "operator": "multiply_constant",
           "columns": ["V1BA01_KG"],

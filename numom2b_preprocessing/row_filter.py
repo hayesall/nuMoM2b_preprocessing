@@ -6,7 +6,6 @@ Conditionally filter rows.
 
 import logging
 import numpy as np
-import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,8 +25,6 @@ class RowFilter:
 
         LOGGER.debug("Starting row filtering.")
 
-        # TODO: Conditions for handling null values.
-
         operations = {
             "drop_if_equal": self._equal,
             "drop_if_not_equal": self._not_equal,
@@ -41,6 +38,7 @@ class RowFilter:
             _value = aggregation["value"]
 
             LOGGER.debug("{0},{1},{2}".format(_operation, str(_columns), _value))
+
             operations[_operation](_columns, _value)
 
         LOGGER.debug("Finished row filtering.")
@@ -50,25 +48,32 @@ class RowFilter:
             raise Exception(
                 "Cannot use 'drop_if_equal' with multiple columns: ", columns
             )
-        self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] == value))
+        if value == "NaN":
+            self.frame = self.frame.dropna(subset=columns)
+        else:
+            _entries = np.flatnonzero(self.frame[columns] == value)
+            self.frame.drop(self.frame.index[_entries], inplace=True)
 
     def _not_equal(self, columns, value):
         if len(columns) > 1:
             raise Exception(
                 "Cannot use 'drop_if_not_equal' with multiple columns: ", columns
             )
-        self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] != value))
+        _entries = np.flatnonzero(self.frame[columns] != value)
+        self.frame.drop(self.frame.index[_entries], inplace=True)
 
     def _greater_than(self, columns, value):
         if len(columns) > 1:
             raise Exception(
                 "Cannot use 'drop_if_greater' with multiple columns: ", columns
             )
-        self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] > value))
+        _entries = np.flatnonzero(self.frame[columns] > value)
+        self.frame.drop(self.frame.index[_entries], inplace=True)
 
     def _less_than(self, columns, value):
         if len(columns) > 1:
             raise Exception(
                 "Cannot use 'drop_if_less_than' with multiple columns: ", columns
             )
-        self.frame = self.frame.drop(np.flatnonzero(self.frame[columns] < value))
+        _entries = np.flatnonzero(self.frame[columns] < value)
+        self.frame.drop(self.frame.index[_entries], inplace=True)

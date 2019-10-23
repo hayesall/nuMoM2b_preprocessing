@@ -1,9 +1,12 @@
-# Copyright 2019 Alexander L. Hayes
+# Copyright © 2019 Alexander L. Hayes
 
 from setuptools import setup
 from setuptools import find_packages
+from os import path
 
-from numom2b_preprocessing._meta import __version__
+# Get __version__ from _meta.py
+with open(path.join("numom2b_preprocessing", "_meta.py")) as f:
+    exec(f.read())
 
 setup(
     name="numom2b_preprocessing",
@@ -17,4 +20,5 @@ setup(
     entry_points={
         "console_scripts": ["numom2b_preprocessing=numom2b_preprocessing.__main__"]
     },
+    install_requires=['numpy', 'pandas']
 )
