@@ -25,6 +25,7 @@ class VariableCleaner:
         LOGGER.debug("Started variable cleaning.")
 
         operations = {
+            "clip": self._clip,
             "default_value": self._default_value,
             "difference": self._difference,
             "divide": self._divide,
@@ -42,6 +43,10 @@ class VariableCleaner:
             operations[_operation](_columns, _value)
 
         LOGGER.debug("Finished variable cleaning.")
+
+    def _clip(self, columns, value):
+        """Clip values in a column to be between LOW and HIGH."""
+        self.frame[columns] = self.frame[columns].clip(lower=value[0], upper=value[1])
 
     def _default_value(self, columns, value):
         self.frame[columns] = self.frame[columns].fillna(value)
