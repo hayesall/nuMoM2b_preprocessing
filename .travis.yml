@@ -1,13 +1,12 @@
-sudo: false
-dist: xenial
+os: linux
 language: python
 
 env:
   - SH=bash
 
 python:
-  - "3.6"
-  - "3.7"
+  - "3.8"
+  - "3.9"
 
 cache:
   pip: true
